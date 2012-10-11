@@ -3,7 +3,7 @@
 <?php $browser = ""; ?>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-    <title>How Andrew divides his day</title>
+    <title>A day, divided.</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <?php
     if ($browser == "mobile") {
@@ -36,7 +36,7 @@
 <body>
 
 <ul>
-    <li data-label="sleep" 
+    <li data-label="sleep">Sleep</li>
 </ul>
 
 </body>
