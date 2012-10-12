@@ -29,15 +29,14 @@
     <script type="text/javascript" src="/js/lib/backbone.js"></script>
     <script type="text/javascript" src="/js/lib/deep-model.js"></script>
     <script type="text/javascript" src="/js/lib/sprintf.js"></script>
+    <script type="text/javascript" src="/js/lib/handlebars.js"></script>
 
     <script type="text/javascript" src="/js/EventTree.js"></script>
+    <script type="text/javascript" src="/js/views/TreeView.js"></script>
+    <script type="text/javascript" src="/js/init.js"></script>
 </head>
 
 <body>
-
-<ul>
-    <li data-label="sleep">Sleep</li>
-</ul>
 
 </body>
 </html>
