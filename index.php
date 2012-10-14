@@ -32,7 +32,7 @@
     <script type="text/javascript" src="/js/lib/handlebars.js"></script>
 
     <script type="text/javascript" src="/js/EventTree.js"></script>
-    <script type="text/javascript" src="/js/views/TreeView.js"></script>
+    <script type="text/javascript" src="/js/views/IndexView.js"></script>
     <script type="text/javascript" src="/js/init.js"></script>
 </head>
 

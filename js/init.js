@@ -13,6 +13,6 @@ $(document).ready(function() {
     c.appendChildren([d1, d2, d3]);
     b.appendChildren([e1, e2]);
 
-    var treeView = new TreeView({model : a});
+    var treeView = new IndexView({model : a});
     treeView.render();
 });
