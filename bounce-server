@@ -1,0 +1,5 @@
+#!/bin/sh
+PID=`ps -a | grep node | grep -o \\[0-9\\]\\\+ | head -1`
+echo "PID = ${PID}"
+kill $PID
+node app &
