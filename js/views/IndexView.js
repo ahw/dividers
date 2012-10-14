@@ -1,8 +1,14 @@
 var IndexView = Backbone.View.extend({
 
     el : 'body',
-    addLink : '<a href="#">add</a>',
-    removeLink : '<a href="#">remove</a>',
+    addLink : '<a class="add"href="#">add</a>',
+    removeLink : '<a class="remove" href="#">remove</a>',
+
+    events : {
+        'click .add' : 'addNode',
+        'click .remove' : 'removeNode',
+        'click .event' : 'logEvent'
+    },
     
     initialize : function(options) {
         this.model = options.model;
@@ -10,15 +16,28 @@ var IndexView = Backbone.View.extend({
 
     render : function() {
         var s = this.renderTree(this.model);
-        console.log(s);
         $(this.el).append(s);
         console.log(JSON.stringify(this.model, null, '    '));
+    },
+
+    addNode : function(e) {
+        return false;
+    },
+
+    removeNode : function(e) {
+        return false;
+    },
+
+    logEvent : function(e) {
+        var eventName = $(e.currentTarget).attr('data-event-name');
+        console.log('eventName = ' + eventName);
+        return false;
     },
 
     renderTree : function(tree, isSubTree) {
         var view = this;
         var s = !isSubTree ? '<ul>' : '';
-        s += sprintf('<li>%s %s %s\n', tree.label, view.addLink, view.removeLink)
+        s += sprintf('<li><a class="event" data-event-name="%s" href="#">%s</a> %s %s\n', tree.label, tree.label, view.addLink, view.removeLink)
 
         if (tree.children.length > 0) {
             for (var i = 0; i < tree.children.length; i++) {

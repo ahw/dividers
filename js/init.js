@@ -1,17 +1,19 @@
 $(document).ready(function() {
 
-    var a = new EventTree('andrew');
-    var b = new EventTree('beth');
-    var c = new EventTree('charlie');
-    var d1 = new EventTree('dan');
-    var d2 = new EventTree('dick');
-    var d3 = new EventTree('dustin');
-    var e1 = new EventTree('eric');
-    var e2 = new EventTree('ethan');
-    a.appendChild(b);
-    b.appendChild(c);
-    c.appendChildren([d1, d2, d3]);
-    b.appendChildren([e1, e2]);
+    var a = new EventTree('Life');
+    var b1 = new EventTree('Work');
+    var b2 = new EventTree('Sleep');
+    var b3 = new EventTree('Exercise');
+    var c1 = new EventTree('Sport');
+    var c2 = new EventTree('Run');
+    var c3 = new EventTree('Gym');
+
+    a.appendChild(b1);
+    a.appendChild(b2);
+    a.appendChild(b3);
+    b3.appendChild(c1);
+    b3.appendChild(c2);
+    b3.appendChild(c3);
 
     var treeView = new IndexView({model : a});
     treeView.render();
