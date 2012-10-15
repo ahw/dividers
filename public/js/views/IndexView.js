@@ -1,7 +1,7 @@
 var IndexView = Backbone.View.extend({
 
-    el : 'body',
-    addLink : '<a class="add"href="#">add</a>',
+    el : '#eventTree',
+    addLink : '<a class="add" href="#">add</a>',
     removeLink : '<a class="remove" href="#">remove</a>',
 
     events : {
@@ -17,7 +17,6 @@ var IndexView = Backbone.View.extend({
     render : function() {
         var s = this.renderTree(this.model);
         $(this.el).append(s);
-        // console.log(JSON.stringify(this.model, null, '    '));
     },
 
     addNode : function(e) {

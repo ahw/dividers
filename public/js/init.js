@@ -1,12 +1,12 @@
 $(document).ready(function() {
 
-    var a = new EventTree('Life');
-    var b1 = new EventTree('Work');
-    var b2 = new EventTree('Sleep');
-    var b3 = new EventTree('Exercise');
-    var c1 = new EventTree('Sports');
-    var c2 = new EventTree('Run');
-    var c3 = new EventTree('Gym');
+    var a = new EventTree('life');
+    var b1 = new EventTree('work');
+    var b2 = new EventTree('sleep');
+    var b3 = new EventTree('exercise');
+    var c1 = new EventTree('sports');
+    var c2 = new EventTree('run');
+    var c3 = new EventTree('gym');
 
     a.appendChild(b1);
     a.appendChild(b2);
