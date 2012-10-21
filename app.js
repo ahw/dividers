@@ -1,5 +1,10 @@
 var express = require('express');
+var http = require('http');
+var port = 4000;
+var https = require('https');
+var securePort = 4443;
 var app = express();
+var fs = require('fs');
 var sprintf = require('sprintf').sprintf;
 
 var redis = require('redis');
@@ -76,5 +81,11 @@ app.post('/events', function(req, res) {
     });
 });
 
-app.listen(4000);
-console.log('Listening on port 4000...');
+http.createServer(app).listen(port);
+var options = {
+    key : fs.readFileSync('../.ssl/server.key'),
+    cert : fs.readFileSync('../.ssl/server.crt')
+};
+
+https.createServer(options, app).listen(securePort);
+console.log(sprintf('Listening on port %s (http) and %s (https)', port, securePort));
