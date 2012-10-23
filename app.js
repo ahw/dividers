@@ -70,13 +70,9 @@ app.post('/events', function(req, res) {
     db.zadd(TIMESTAMPS, now, now);
     console.log(sprintf('ZADD %s %s (offset = %s)', now, now, offset));
 
-    var pevKey = now + ':pev';
-    var evKey = now + ':ev';
-    db.set(pevKey, pev);
-    console.log(sprintf('SET %s %s', pevKey, pev));
-    db.set(evKey, ev);
-    console.log(sprintf('SET %s %s', evKey, ev));
-
+    var eventKey = 'event:' + now;
+    db.hset(eventKey, 'ev', ev, 'pev', pev, 'time', now);
+    console.log(sprintf('HSET %s ev %s pev %s time %s', eventKey, ev, pev, now));
     res.json({
         pev : pev,
         ev : ev,
