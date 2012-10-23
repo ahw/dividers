@@ -1,7 +1,7 @@
 var express = require('express');
 var http = require('http');
-var port = 4000;
 var https = require('https');
+var port = 4000;
 var securePort = 4443;
 var app = express();
 var fs = require('fs');
@@ -25,31 +25,35 @@ app.get('/', function(req, res) {
 
     var eventList = [];
     var timestamps = [];
-    db.zrange(TIMESTAMPS, 0, -1, function(error, reply) {
-        timestamps = reply;
-        var item = {}; // The container for all the data we're going to get.
-        for(var i = 0; i < timestamps.length; i++) {
-            eventList.push(item); // Push the container onto the event list.
-            var timestamp = timestamps[i];
-            item.timestamp = timestamp;
-            db.get(timestamp + ':pev', function(error, reply) {
-                error ? console.log(error) : null;
-                item.pev = reply;
+    db.sort(TIMESTAMPS,
+        'GET', '#',
+        'GET', 'event:*->pev',
+        'GET', 'event:*->ev',
+        function(error, reply) {
+
+        console.log('REPLY:');
+        console.log(JSON.stringify(reply, null, '    '));
+        for (var i = 0; i < (reply.length / 3); i++) {
+            var timestamp = reply[3 * i];
+            var pev       = reply[3 * i + 1];
+            var ev        = reply[3 * i + 2];
+            console.log('Timestamp    : ', reply[3 * i]);
+            console.log('Parent event : ', reply[3 * i + 1]);
+            console.log('Event        : ', reply[3 * i + 2]);
+            eventList.push({
+                pev : pev,
+                ev : ev,
+                timestamp : timestamps
             });
-            db.get(timestamp + ':ev', function(error, reply) {
-                error ? console.log(error) : null;
-                item.ev = reply;
-            });
+
         }
     });
 
-    setTimeout(function() {
-        var context = {
-            title : 'day division',
-            eventList : JSON.stringify(eventList, null, '    ')
-        };
-        res.render('index', context);
-    }, 3000);
+    var context = {
+        title : 'day division',
+        eventList : JSON.stringify(eventList, null, '    ')
+    };
+    res.render('index', context);
 
 });
 
