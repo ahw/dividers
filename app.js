@@ -43,18 +43,21 @@ app.get('/', function(req, res) {
             eventList.push({
                 pev : pev,
                 ev : ev,
-                timestamp : timestamps
+                timestamp : timestamp
             });
 
         }
+
+        var context = {
+            title : 'dividers',
+            eventList : eventList
+        };
+        res.render('index', context);
     });
+});
 
-    var context = {
-        title : 'day division',
-        eventList : JSON.stringify(eventList, null, '    ')
-    };
-    res.render('index', context);
-
+app.get('/test', function(req, res) {
+    res.send('This is a test');
 });
 
 app.post('/events', function(req, res) {
@@ -71,7 +74,7 @@ app.post('/events', function(req, res) {
     console.log(sprintf('ZADD %s %s (offset = %s)', now, now, offset));
 
     var eventKey = 'event:' + now;
-    db.hset(eventKey, 'ev', ev, 'pev', pev, 'time', now);
+    db.hmset(eventKey, 'ev', ev, 'pev', pev, 'time', now);
     console.log(sprintf('HSET %s ev %s pev %s time %s', eventKey, ev, pev, now));
     res.json({
         pev : pev,

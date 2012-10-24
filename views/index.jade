@@ -1,6 +1,8 @@
 extends layout
 
 block content
-    h1 A day, divided
+    h1= title
     div#eventTree
-    pre= eventList
+        each item in eventList
+            div.event-history.event-name #{item.pev}/#{item.ev}
+            div.event-history.event-time #{item.timestamp}

@@ -15,3 +15,17 @@ ul {
     list-style:none;
     font-family:"Monospace", monospace;
 }
+
+.event-history {
+    float:left;
+    font-family:"Monospace", monospace;
+}
+
+.event-time {
+    width:100px;
+}
+
+.event-name {
+    width:200px;
+    clear:both;
+}
