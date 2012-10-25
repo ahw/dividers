@@ -13,6 +13,7 @@ db.on("error", function(err) {
     console.log("Error " + err);
 });
 var TIMESTAMPS = 'TIMESTAMPS';
+var EVENTS = 'EVENTS';
 
 // Use jade templating.
 app.set('view engine', 'jade');
@@ -23,37 +24,51 @@ app.use(express.bodyParser()); // Lets us easily parse POST requests.
 
 app.get('/', function(req, res) {
 
-    var eventList = [];
-    var timestamps = [];
+    var history = [];
     db.sort(TIMESTAMPS,
         'GET', '#',
         'GET', 'event:*->pev',
         'GET', 'event:*->ev',
         function(error, reply) {
 
-        console.log('REPLY:');
-        console.log(JSON.stringify(reply, null, '    '));
         for (var i = 0; i < (reply.length / 3); i++) {
             var timestamp = reply[3 * i];
             var pev       = reply[3 * i + 1];
             var ev        = reply[3 * i + 2];
-            console.log('Timestamp    : ', reply[3 * i]);
-            console.log('Parent event : ', reply[3 * i + 1]);
-            console.log('Event        : ', reply[3 * i + 2]);
-            eventList.push({
+            history.push({
                 pev : pev,
                 ev : ev,
                 timestamp : timestamp
             });
-
         }
-
-        var context = {
-            title : 'dividers',
-            eventList : eventList
-        };
-        res.render('index', context);
+        done();
     });
+
+    var events = [];
+    db.sort(EVENTS, 'ALPHA', function(error, reply) {
+        
+        for (var i = 0; i < reply.length; i++) {
+            events.push({
+                pev : reply[i].split(':')[0],
+                ev : reply[i].split(':')[1],
+                offset : 0
+            });
+        }
+        done();
+
+    });
+
+    var done = function() {
+        if (history.length && events.length) {
+            var context = {
+                title : 'dividers',
+                events : events,
+                history : history
+            };
+            res.render('index', context);
+        }
+    };
+
 });
 
 app.get('/test', function(req, res) {

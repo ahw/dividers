@@ -2,7 +2,11 @@ extends layout
 
 block content
     h1= title
-    div#eventTree
-        each item in eventList
-            div.event-history.event-name #{item.pev}/#{item.ev}
+    div#events
+        each item in events
+            a(href='#', data-pev=item.pev, data-ev=item.ev) #{item.pev}:#{item.ev}
+            br
+    div#history
+        each item in history
+            div.event-history.event-name #{item.pev}:#{item.ev}
             div.event-history.event-time #{item.timestamp}
