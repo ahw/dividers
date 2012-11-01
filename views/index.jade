@@ -8,9 +8,9 @@ block content
             - var name = item.ev ? item.pev + ":" + item.ev : item.pev
             a.event(href='#', data-pev=item.pev, data-ev=item.ev) #{name}
             br
-    div#history
-        each item in history
-            //- Either display "parent:child" or just "parent"
-            - var name = item.ev ? item.pev + ":" + item.ev : item.pev
-            div.event-history.event-name #{name}
-            div.event-history.event-time #{item.timestamp}
+    //-div#history
+    //-    each item in history
+    //-        //- Either display "parent:child" or just "parent"
+    //-        - var name = item.ev ? item.pev + ":" + item.ev : item.pev
+    //-        div.event-history.event-name #{name}
+    //-        div.event-history.event-time #{item.timestamp}

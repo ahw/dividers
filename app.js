@@ -24,6 +24,34 @@ app.use(express.bodyParser()); // Lets us easily parse POST requests.
 
 app.get('/', function(req, res) {
 
+    var events = [];
+    db.sort(EVENTS, 'ALPHA', function(error, reply) {
+        
+        for (var i = 0; i < reply.length; i++) {
+            events.push({
+                pev : reply[i].split(':')[0],
+                ev : reply[i].split(':')[1],
+                offset : 0
+            });
+        }
+        done();
+
+    });
+
+    var done = function() {
+        if (events.length) {
+            var context = {
+                title : 'dividers',
+                events : events
+            };
+            res.render('index', context);
+        }
+    };
+
+});
+
+app.get('/history', function(req, res) {
+
     var history = [];
     db.sort(TIMESTAMPS,
         'GET', '#',
@@ -44,35 +72,16 @@ app.get('/', function(req, res) {
         done();
     });
 
-    var events = [];
-    db.sort(EVENTS, 'ALPHA', function(error, reply) {
-        
-        for (var i = 0; i < reply.length; i++) {
-            events.push({
-                pev : reply[i].split(':')[0],
-                ev : reply[i].split(':')[1],
-                offset : 0
-            });
-        }
-        done();
-
-    });
-
     var done = function() {
-        if (history.length && events.length) {
-            var context = {
-                title : 'dividers',
-                events : events,
-                history : history
-            };
-            res.render('index', context);
+        var context = { history : history };
+        if (req.accepts('html')) {
+            res.render('history', context);
+        } else if (req.accepts('json')) {
+            console.log('Accepts: json');
+            res.json(history);
         }
     };
 
-});
-
-app.get('/test', function(req, res) {
-    res.send('This is a test');
 });
 
 app.post('/events', function(req, res) {
