@@ -2,6 +2,7 @@ extends layout
 
 block content
     h1 history
+    p: a(href='/events') events
     div#history
         each item in history
             //- Either display "parent:child" or just "parent"
