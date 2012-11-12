@@ -6,7 +6,7 @@ $(document).ready(function() {
         var pev = $(this).attr('data-pev');
         var offset = 0;
         $.ajax({
-            url : '/events',
+            url : '/history',
             type : 'post',
             data : {
                 ev : ev ? ev : "",
