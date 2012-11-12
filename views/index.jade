@@ -3,9 +3,9 @@ extends layout
 block content
     h1= title
     p: a(href='/history') history
-    div#events
+    div#event-list
         each item in events
             //- Either display "parent:child" or just "parent"
             - var name = item.ev ? item.pev + ":" + item.ev : item.pev
-            a.event(href='#', data-pev=item.pev, data-ev=item.ev) #{name}
-            br
+            a.event-list.event.event-name(href='#', data-pev=item.pev, data-ev=item.ev) #{name}
+            a.event-list.delete-event(href='#', data-name=name) DELETE
