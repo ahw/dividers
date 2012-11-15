@@ -6,6 +6,6 @@ block content
     div#history
         each item in history
             //- Either display "parent:child" or just "parent"
-            - var name = item.ev ? item.pev + ":" + item.ev : item.pev
+            - var name = item.subname ? item.name + ":" + item.subname : item.name
             div.event-history.event-name #{name}
             div.event-history.event-time #{item.timestamp}

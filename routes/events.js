@@ -7,9 +7,8 @@ module.exports = function(app) {
             
             for (var i = 0; i < reply.length; i++) {
                 events.push({
-                    pev : reply[i].split(':')[0],
-                    ev : reply[i].split(':')[1],
-                    offset : 0
+                    name : reply[i].split(':')[0],
+                    subname : reply[i].split(':')[1],
                 });
             }
             done();

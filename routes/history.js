@@ -5,17 +5,17 @@ module.exports = function(app) {
         var history = [];
         db.sort(TIMESTAMPS, 'DESC',
             'GET', '#',
-            'GET', 'event:*->pev',
-            'GET', 'event:*->ev',
+            'GET', 'event:*->name',
+            'GET', 'event:*->subname',
             function(error, reply) {
 
             for (var i = 0; i < (reply.length / 3); i++) {
                 var timestamp = reply[3 * i];
-                var pev       = reply[3 * i + 1];
-                var ev        = reply[3 * i + 2];
+                var name      = reply[3 * i + 1];
+                var subname   = reply[3 * i + 2];
                 history.push({
-                    pev : pev,
-                    ev : ev,
+                    name : name,
+                    subname : subname,
                     timestamp : timestamp
                 });
             }
@@ -36,8 +36,8 @@ module.exports = function(app) {
 
 
     app.post('/history', function(req, res) {
-        var pev = req.body.pev;
-        var ev = req.body.ev; 
+        var name = req.body.name;
+        var subname = req.body.subname; 
         var offset = req.body.offset;
         offset = offset ? parseInt(offset) : 0; // Offset defaults to 0.
         var id = req.body.id;
@@ -49,11 +49,11 @@ module.exports = function(app) {
         console.log(sprintf('ZADD %s %s (offset = %s)', now, now, offset));
 
         var eventKey = 'event:' + now;
-        db.hmset(eventKey, 'ev', ev, 'pev', pev, 'time', now);
-        console.log(sprintf('HSET %s ev %s pev %s time %s', eventKey, ev, pev, now));
+        db.hmset(eventKey, 'name', name, 'subname', subname, 'time', now);
+        console.log(sprintf('HSET %s name %s subname %s time %s', eventKey, name, subname, now));
         res.json({
-            pev : pev,
-            ev : ev,
+            name : name,
+            subname : subname,
             offset : offset,
             id : id
         });

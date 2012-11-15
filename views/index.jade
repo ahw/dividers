@@ -6,6 +6,6 @@ block content
     div#event-list
         each item in events
             //- Either display "parent:child" or just "parent"
-            - var name = item.ev ? item.pev + ":" + item.ev : item.pev
-            a.event-list.event.event-name(href='#', data-pev=item.pev, data-ev=item.ev) #{name}
-            a.event-list.delete-event(href='#', data-name=name) DELETE
+            - var fullName = item.subname ? item.name + ":" + item.subname : item.name
+            a.event-list.event.event-name(href='#', data-name=item.name, data-subname=item.subname) #{fullName}
+            a.event-list.delete-event(href='#', data-name=item.name) DELETE
