@@ -7,13 +7,18 @@ a {
     color: #00B7FF;
 }
 
-.event-list {
-    float:left;
-}
-
 #history td {
     font-family:"Monospace", monospace;
-    padding:0 5px;
+    padding-right:1em;
+}
+
+#event-list {
+    font-family:"Monospace", monospace;
+}
+
+#history tr {
+    margin:0;
+    padding:0;
 }
 
 .delete-event {

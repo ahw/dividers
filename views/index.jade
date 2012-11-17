@@ -8,12 +8,17 @@ block content
             input(name='name', type='text', value='Name')
             input(name='subname', type='text', value='Subname')
             input(type='submit', value='Create')
-        each item in events
-            //- Either display "parent:child" or just "parent"
-            - var fullName = item.subname ? item.name + ":" + item.subname : item.name
-            a.event-list.event.event-name(href='#', data-name=item.name, data-subname=item.subname) #{fullName}
-            a.event-list.event-delete(
-                href='#',
-                data-name=item.name,
-                data-subname=item.subname,
-                data-fullName=fullName) DELETE
+
+        table.table
+            each item in events
+                tr
+                    td
+                        //- Either display "parent:child" or just "parent"
+                        - var fullName = item.subname ? item.name + ":" + item.subname : item.name
+                        a.event(href='#', data-name=item.name, data-subname=item.subname) #{fullName}
+                    td
+                        a.event-delete(
+                            href='#',
+                            data-name=item.name,
+                            data-subname=item.subname,
+                            data-fullName=fullName) DELETE
