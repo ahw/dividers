@@ -11,18 +11,9 @@ a {
     float:left;
 }
 
-.event-history {
-    float:left;
+#history td {
     font-family:"Monospace", monospace;
-}
-
-.event-time {
-    width:100px;
-}
-
-.event-name {
-    width:200px;
-    clear:both;
+    padding:0 5px;
 }
 
 .delete-event {

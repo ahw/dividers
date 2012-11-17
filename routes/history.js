@@ -13,10 +13,15 @@ module.exports = function(app) {
                 var timestamp = reply[3 * i];
                 var name      = reply[3 * i + 1];
                 var subname   = reply[3 * i + 2];
+                var date = new Date(parseInt(timestamp));
+                console.log('date = ' + date);
+                var timef = date.toLocaleString();
+                console.log('timestamp = ' + timestamp + ' timef = ' + timef);
                 history.push({
                     name : name,
                     subname : subname,
-                    timestamp : timestamp
+                    timestamp : timestamp,
+                    timef : timef
                 });
             }
             done();
@@ -43,7 +48,7 @@ module.exports = function(app) {
         var id = req.body.id;
 
         // Add the timestamp to the TIMESTAMPS sorted set.
-        var now = Math.floor(Date.now() / 1000); // Get time in seconds.
+        var now = Date.now(); // Get time in milliseconds.
         now += offset;
         db.zadd(TIMESTAMPS, now, now);
         console.log(sprintf('ZADD %s %s (offset = %s)', now, now, offset));

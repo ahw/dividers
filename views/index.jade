@@ -5,8 +5,8 @@ block content
     p: a(href='/history') history
     div#event-list
         form(method='post', action='/events')
-            input(name='name', type='text')
-            input(name='subname', type='text')
+            input(name='name', type='text', value='Name')
+            input(name='subname', type='text', value='Subname')
             input(type='submit', value='Create')
         each item in events
             //- Either display "parent:child" or just "parent"
