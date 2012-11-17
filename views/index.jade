@@ -4,10 +4,12 @@ block content
     h1= title
     p: a(href='/history') history
     div#event-list
-        form(method='post', action='/events')
-            input(name='name', type='text', value='Name')
-            input(name='subname', type='text', value='Subname')
-            input(type='submit', value='Create')
+
+        form.form-inline(method='post', action='/events')
+            fieldset
+                input(name='name', type='text', placeholder='Name')
+                input(name='subname', type='text', placeholder='Subname')
+                button.btn(type='submit') Create
 
         table.table
             each item in events

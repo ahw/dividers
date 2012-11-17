@@ -5,10 +5,24 @@ block content
     p: a(href='/events') events
     div#history
         table.table
+            - var prevDateString = ""
             each item in history
-                tr
+                //- If this item represents a day different than the
+                //- previous day, then give the "tr" element a different
+                //- class name so we can style it accordingly.
+                - var dateString = item.timeDay + item.timeMonth + item.timeDate
+                - var newDay = dateString != prevDateString
+                - var newDayClass = newDay ? 'newDay' : '';
+                if newDay
+                    - prevDateString = dateString
+                tr(class=newDayClass)
                     //- Either display "parent:child" or just "parent"
                     - var name = item.subname ? item.name + ":" + item.subname : item.name
                     td #{name}
-                    td #{item.timef}
+
+                    if newDay
+                        td #{item.timeDay}, #{item.timeMonth} #{item.timeDate}
+                    else
+                        td
+                    td #{item.timeHour}:#{item.timeMinute}:#{item.timeSecond} #{item.timeAmPm}
                     td #{item.timestamp}

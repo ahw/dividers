@@ -6,6 +6,7 @@ var securePort = 4443;
 var app = express();
 var fs = require('fs');
 sprintf = require('sprintf').sprintf; // Globally available.
+moment = require('moment'); // Globally available.
 
 var redis = require('redis');
 db = redis.createClient(); // Making the db globally available.

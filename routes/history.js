@@ -1,6 +1,8 @@
 module.exports = function(app) {
 
-    app.get('/history', function(req, res) {
+    app.get('/history/:format?', function(req, res) {
+
+        console.log('format = ' + req.params.format);
 
         var history = [];
         db.sort(TIMESTAMPS, 'DESC',
@@ -10,18 +12,24 @@ module.exports = function(app) {
             function(error, reply) {
 
             for (var i = 0; i < (reply.length / 3); i++) {
-                var timestamp = reply[3 * i];
+                var timestamp = parseInt(reply[3 * i]);
                 var name      = reply[3 * i + 1];
                 var subname   = reply[3 * i + 2];
-                var date = new Date(parseInt(timestamp));
-                console.log('date = ' + date);
-                var timef = date.toLocaleString();
-                console.log('timestamp = ' + timestamp + ' timef = ' + timef);
+                // Use MomentJS to format the timestamp to human-friendly.
+                var m = moment(timestamp);
+                var timeFormatted = m.format('ddd MMM Do, h:mm:ss a');
                 history.push({
                     name : name,
                     subname : subname,
                     timestamp : timestamp,
-                    timef : timef
+                    timeFormatted : timeFormatted,
+                    timeDay    : m.format('dddd'),
+                    timeMonth  : m.format('MMM'),
+                    timeDate   : m.format('Do'),
+                    timeHour   : m.format('h'),
+                    timeMinute : m.format('mm'),
+                    timeSecond : m.format('ss'),
+                    timeAmPm   : m.format('a')
                 });
             }
             done();
