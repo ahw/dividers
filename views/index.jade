@@ -7,20 +7,32 @@ block content
 
         form.form-inline(method='post', action='/events')
             fieldset
-                input(name='name', type='text', placeholder='Name')
-                input(name='subname', type='text', placeholder='Subname')
-                button.btn(type='submit') Create
+                input.input-small(name='name', type='text', placeholder='Name')
+                input.input-small(name='subname', type='text', placeholder='Subname')
+                button.btn.btn-primary(type='submit') Create
 
         table.table
             each item in events
                 tr
-                    td
-                        //- Either display "parent:child" or just "parent"
-                        - var fullName = item.subname ? item.name + ":" + item.subname : item.name
-                        a.event(href='#', data-name=item.name, data-subname=item.subname) #{fullName}
-                    td
-                        a.event-delete(
-                            href='#',
-                            data-name=item.name,
-                            data-subname=item.subname,
-                            data-fullName=fullName) DELETE
+                    form(method='post', action='/history')
+                        td
+                            //- Either display "parent:child" or just "parent"
+                            - var fullName = item.subname ? item.name + ":" + item.subname : item.name
+                            //- a.event(href='#', data-name=item.name, data-subname=item.subname) #{fullName}
+                            button.btn-flat(type='submit') #{fullName}
+                            input(type='hidden', name='name', value=item.name)
+                            input(type='hidden', name='subname', value=item.subname)
+                        td
+                            //- input.input-mini(name='offset', type='text', placeholder='0')
+                            //- select(name="timeUnit")
+                            //-     option(value="seconds") seconds
+                            //-     option(value="minutes") minutes
+                            //-     option(value="hours") hours
+                            //-     option(value="days") days
+                                
+                        td
+                            a.event-delete(
+                                href='#',
+                                data-name=item.name,
+                                data-subname=item.subname,
+                                data-fullName=fullName) DELETE
