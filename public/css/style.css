@@ -7,19 +7,6 @@ tr.newDay td {
     border-top:1px solid black;
 }
 
-.btn-flat {
-    border:none;
-    background-color:#eee;
-    border-radius:4px;
-    font-weight:bold;
-}
-
-.btn-flat:hover {
-    background-color:#aaa;
-    color:white;
-}
-
-.btn-flat:active {
-    background-color:yellow;
-    color:black;
+input {
+    margin:0 2px;
 }

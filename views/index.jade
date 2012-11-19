@@ -20,17 +20,13 @@ block content
                             - var postData = "name=" + item.name;
                             - postData += "&subname=" + (item.subname ?  item.subname : "");
                             a.event.psuedo-form(href='#', data-action='/history', data-method='post', data-postData=postData) #{fullName}
-                            //- button.btn-flat(type='submit') #{fullName}
-                            //- input(type='hidden', name='name', value=item.name)
-                            //- input(type='hidden', name='subname', value=item.subname)
-                        //- td
-                            //- input.input-mini(name='offset', type='text', placeholder='0')
-                            //- select(name="timeUnit")
-                            //-     option(value="seconds") seconds
-                            //-     option(value="minutes") minutes
-                            //-     option(value="hours") hours
-                            //-     option(value="days") days
-                                
+                        td
+                            input(type='text', placeholder='0')
+                            select
+                                option(value='seconds') seconds
+                                option(value='minutes') minutes
+                                option(value='hours') hours
+                                option(value='days') days
                         td
                             a.event-delete(
                                 href='#',
