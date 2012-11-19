@@ -14,15 +14,16 @@ block content
         table.table
             each item in events
                 tr
-                    form(method='post', action='/history')
                         td
                             //- Either display "parent:child" or just "parent"
                             - var fullName = item.subname ? item.name + ":" + item.subname : item.name
-                            //- a.event(href='#', data-name=item.name, data-subname=item.subname) #{fullName}
-                            button.btn-flat(type='submit') #{fullName}
-                            input(type='hidden', name='name', value=item.name)
-                            input(type='hidden', name='subname', value=item.subname)
-                        td
+                            - var postData = "name=" + item.name;
+                            - postData += "&subname=" + (item.subname ?  item.subname : "");
+                            a.event.psuedo-form(href='#', data-action='/history', data-method='post', data-postData=postData) #{fullName}
+                            //- button.btn-flat(type='submit') #{fullName}
+                            //- input(type='hidden', name='name', value=item.name)
+                            //- input(type='hidden', name='subname', value=item.subname)
+                        //- td
                             //- input.input-mini(name='offset', type='text', placeholder='0')
                             //- select(name="timeUnit")
                             //-     option(value="seconds") seconds

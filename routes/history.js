@@ -50,7 +50,7 @@ module.exports = function(app) {
 
     app.post('/history', function(req, res) {
         var name = req.body.name;
-        var subname = req.body.subname; 
+        var subname = req.body.subname || "";  // Just to be safe.
         var offset = req.body.offset;
         offset = offset ? parseInt(offset) : 0; // Offset defaults to 0.
         var id = req.body.id;
