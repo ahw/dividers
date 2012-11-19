@@ -8,7 +8,7 @@ $(document).ready(function() {
         /**
          * Handle success events for arbitrary requests.
          * The `params` object should contain a `url`, `method`, and
-         * `target`.  The `target` element is a jQuery element.
+         * `target`.  The `target` element is a jQuery selector.
          * Example:
          *
          *  dividers.success({
@@ -21,25 +21,47 @@ $(document).ready(function() {
         success : function(params) {
             var url = (params.url || "").toLowerCase();
             var method = (params.method || "").toUpperCase();
-            // Will use this key to figure what sort of success-related
-            // stuff to do.
+            var target = params.target;
             var key = method + " " + url;
-            console.log('Success for ' + key);
             switch(key)  {
                 case 'POST /history':
+                    var row = target.closest('tr');
+                    var originalColor = row.css('background-color');
+                    row.css('background-color', 'yellow');
+                    row.animate({backgroundColor: originalColor}, 1000);
                     break;
                 case 'POST /events':
                     break;
             }
         },
 
+        /**
+         * Handle error events for arbitrary requests.
+         * The `params` object should contain a `url`, `method`, and
+         * `target`.  The `target` element is a jQuery selector.
+         * Example:
+         *
+         *  dividers.success({
+         *      url : '/history',
+         *      method : 'POST',
+         *      target : $('a.click')
+         *  });
+         *
+         */
         error : function(params) {
             var url = (params.url || "").toLowerCase();
             var method = (params.method || "").toUpperCase();
-            // Will use this key to figure what sort of success-related
-            // stuff to do.
             var key = method + " " + url;
-            console.log('Error for ' + key);
+            switch(key) {
+                case 'POST /history':
+                    var row = target.closest('tr');
+                    var originalColor = row.css('background-color');
+                    row.css('background-color', 'red');
+                    row.animate({backgroundColor: originalColor}, 1000);
+                    break;
+                case 'POST /events':
+                    break;
+            }
         }
     };
 
@@ -49,7 +71,7 @@ $(document).ready(function() {
      * the "data-method" attribute, request endpoint is contained in the
      * "data-action" attribute. POST data is contained in the
      * "data-postdata" attribute, formatted in a `key1=val1&key2=val2`
-     * syntax.
+     * syntax. This should remain view-agnostic.
      */
     $('.psuedo-form').click(function() {
         var method = $(this).attr('data-method').toUpperCase();
@@ -70,10 +92,6 @@ $(document).ready(function() {
                 type : method,
                 data : postData,
                 success : function(response) {
-                    // TODO. Figure out how to embed some sort of callback
-                    // functionality. Since clients could mangle this before
-                    // clicking the link, we'll have to hash it beforehand.
-                    // Right?
                     dividers.success({
                         url : action,
                         method : method,
@@ -89,16 +107,6 @@ $(document).ready(function() {
                 }
             });
         }
-    });
-
-    /**
-     * Provide some visual feedback on event link clicks.
-     */
-    $('.event').click(function() {
-        var row = $(this).closest('tr');
-        var originalColor = row.css('background-color');
-        row.css('background-color', 'yellow');
-        row.animate({backgroundColor: originalColor}, 1000);
     });
 
     $('.event-delete').click(function() {
