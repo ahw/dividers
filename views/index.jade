@@ -17,12 +17,31 @@ block content
                         td
                             //- Either display "parent:child" or just "parent"
                             - var fullName = item.subname ? item.name + ":" + item.subname : item.name
-                            - var postData = "name=" + item.name;
-                            - postData += "&subname=" + (item.subname ?  item.subname : "");
-                            a.event.psuedo-form(href='#', data-action='/history', data-method='post', data-postData=postData) #{fullName}
+                            - var subname = item.subname ?  item.subname : "";
+                            a.event.pseudo-form.pseudo-submit(
+                                href='#',
+                                data-formid=fullName,
+                                data-action='/history',
+                                data-method='post') #{fullName}
+
+                            input.pseudo-form(
+                                data-formid=fullName,
+                                type='hidden',
+                                name='name',
+                                value=item.name)
+
+                            input.pseudo-form(
+                                data-formid=fullName,
+                                type='hidden',
+                                name='subname',
+                                value=subname)
                         td
-                            input(type='text', placeholder='0')
-                            select
+                            input.pseudo-form(
+                                data-formid=fullName,
+                                name='offset',
+                                type='text',
+                                placeholder='0')
+                            select.pseudo-form(name='offsetunits', data-formid=fullName)
                                 option(value='seconds') seconds
                                 option(value='minutes') minutes
                                 option(value='hours') hours

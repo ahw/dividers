@@ -7,6 +7,11 @@ tr.newDay td {
     border-top:1px solid black;
 }
 
-input {
+input[name="offset"] {
     margin:0 2px;
+    width:2em;
+}
+
+select {
+    margin:0 2px; !important
 }

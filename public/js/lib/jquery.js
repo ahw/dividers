@@ -1,1 +1,1 @@
-jquery-1.6.1.js
+jquery-1.8.2.js

@@ -52,8 +52,23 @@ module.exports = function(app) {
         var name = req.body.name;
         var subname = req.body.subname || "";  // Just to be safe.
         var offset = req.body.offset;
+        var offsetunits = req.body.offsetunits;
         offset = offset ? parseInt(offset) : 0; // Offset defaults to 0.
         var id = req.body.id;
+
+        console.log('offsetunits = ' + offsetunits);
+        switch(offsetunits) {
+            case 'days':
+                offset = offset * 24;
+            case 'hours':
+                offset = offset * 60;
+            case 'minutes':
+                offset = offset * 60;
+            case 'seconds':
+            default:
+                offset = offset * 1000;
+        }
+        console.log('offset = ' + offset);
 
         // Add the timestamp to the TIMESTAMPS sorted set.
         var now = Date.now(); // Get time in milliseconds.
@@ -64,11 +79,7 @@ module.exports = function(app) {
         var eventKey = 'event:' + now;
         db.hmset(eventKey, 'name', name, 'subname', subname, 'time', now);
         console.log(sprintf('HSET %s name %s subname %s time %s', eventKey, name, subname, now));
-        res.json({
-            name : name,
-            subname : subname,
-            offset : offset,
-            id : id
-        });
+        // Echo the request back.
+        res.json(req.body);
     });
 };
