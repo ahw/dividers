@@ -7,41 +7,31 @@ block content
 
         form.form-inline(method='post', action='/events')
             fieldset
-                input.input-small(name='name', type='text', placeholder='Name')
-                input.input-small(name='subname', type='text', placeholder='Subname')
+                input.input(name='name', type='text', placeholder='Name')
                 button.btn.btn-primary(type='submit') Create
 
         table.table
             each item in events
                 tr
                         td
-                            //- Either display "parent:child" or just "parent"
-                            - var fullName = item.subname ? item.name + ":" + item.subname : item.name
-                            - var subname = item.subname ?  item.subname : "";
                             a.event.pseudo-form.pseudo-submit(
                                 href='#',
-                                data-formid=fullName,
+                                data-formid=item.name,
                                 data-action='/history',
-                                data-method='post') #{fullName}
+                                data-method='post') #{item.name}
 
                             input.pseudo-form(
-                                data-formid=fullName,
+                                data-formid=item.name,
                                 type='hidden',
                                 name='name',
                                 value=item.name)
-
-                            input.pseudo-form(
-                                data-formid=fullName,
-                                type='hidden',
-                                name='subname',
-                                value=subname)
                         td
                             input.pseudo-form(
-                                data-formid=fullName,
+                                data-formid=item.name,
                                 name='offset',
                                 type='text',
                                 placeholder='0')
-                            select.pseudo-form(name='offsetunits', data-formid=fullName)
+                            select.pseudo-form(name='offsetunits', data-formid=item.name)
                                 option(value='seconds') seconds
                                 option(value='minutes') minutes
                                 option(value='hours') hours
@@ -49,6 +39,4 @@ block content
                         td
                             a.event-delete(
                                 href='#',
-                                data-name=item.name,
-                                data-subname=item.subname,
-                                data-fullName=fullName) DELETE
+                                data-name=item.name) DELETE
