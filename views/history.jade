@@ -17,12 +17,12 @@ block content
                     - prevDateString = dateString
                 tr(class=newDayClass)
                     //- Either display "parent:child" or just "parent"
-                    - var name = item.subname ? item.name + ":" + item.subname : item.name
-                    td #{name}
+                    td #{item.name}
 
                     if newDay
                         td #{item.timeDay}, #{item.timeMonth} #{item.timeDate}
                     else
                         td
                     td #{item.timeHour}:#{item.timeMinute}:#{item.timeSecond} #{item.timeAmPm}
-                    td #{item.timestamp}
+                    td #{item.duration}
+                    td.text-light #{item.start}
