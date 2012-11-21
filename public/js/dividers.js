@@ -23,15 +23,17 @@ $(document).ready(function() {
             var method = (params.method || "").toUpperCase();
             var target = params.target;
             var key = method + " " + url;
-            switch(key)  {
-                case 'POST /history':
-                    var row = target.closest('tr');
-                    var originalColor = row.css('background-color');
-                    row.css('background-color', 'yellow');
-                    row.animate({backgroundColor: originalColor}, 1000);
-                    break;
-                case 'POST /events':
-                    break;
+
+            if (/POST \/history/.test(key)) {
+                var row = target.closest('tr');
+                var originalColor = row.css('background-color');
+                row.css('background-color', 'yellow');
+                row.animate({backgroundColor: originalColor}, 1000);
+            } else if (/POST \/events/.test(key)) {
+                // TODO
+            } else if (/DELETE \/history\//.test(key)) {
+                var row = target.closest('tr');
+                row.remove();
             }
         },
 
@@ -41,7 +43,7 @@ $(document).ready(function() {
          * `target`.  The `target` element is a jQuery selector.
          * Example:
          *
-         *  dividers.success({
+         *  dividers.error({
          *      url : '/history',
          *      method : 'POST',
          *      target : $('a.click')
@@ -57,15 +59,17 @@ $(document).ready(function() {
             // `data-action="/bogus"`, for example, this handler will never
             // do anything useful, since it depends on `url` and `method`
             // being things it knows about.
-            switch(key) {
-                case 'POST /history':
-                    var row = target.closest('tr');
-                    var originalColor = row.css('background-color');
-                    row.css('background-color', 'red');
-                    row.animate({backgroundColor: originalColor}, 1000);
-                    break;
-                case 'POST /events':
-                    break;
+            if (/POST \/history/.test(key)) {
+                var row = target.closest('tr');
+                var originalColor = row.css('background-color');
+                row.css('background-color', 'red');
+                row.animate({backgroundColor: originalColor}, 1000);
+            } else if (/POST \/events/.test(key)) {
+                // TODO
+            } else if (/DELETE \/history\//.test(key)) {
+                var row = target.closest('tr');
+                row.css('background-color', 'red');
+                row.animate({backgroundColor: originalColor}, 1000);
             }
         }
     };
@@ -83,6 +87,7 @@ $(document).ready(function() {
         var action = $(this).attr('data-action');
         var target = $(this);
         var formId = $(this).attr('data-formid');
+        var postData = {};
         if (method == 'POST') {
             var postDataString = ""; //$(this).attr('data-postData');
 
@@ -99,7 +104,6 @@ $(document).ready(function() {
                 }
             });
 
-            var postData = {};
             var params = postDataString.split('&');
             $.each(params, function(index, keyValPair) {
                 var key = keyValPair.split('=')[0];
@@ -109,27 +113,29 @@ $(document).ready(function() {
                 }
             });
             console.log(postData);
-
-            $.ajax({
-                url : action,
-                type : method,
-                data : postData,
-                success : function(response) {
-                    dividers.success({
-                        url : action,
-                        method : method,
-                        target : target
-                    });
-                },
-                error : function() {
-                    dividers.error({
-                        url : action,
-                        method : method,
-                        target : target
-                    });
-                }
-            });
         }
+
+        $.ajax({
+            url : action,
+            type : method,
+            data : postData,
+            success : function(response) {
+                dividers.success({
+                    url : action,
+                    method : method,
+                    target : target
+                });
+            },
+            error : function() {
+                dividers.error({
+                    url : action,
+                    method : method,
+                    target : target
+                });
+            }
+        });
+
+        return false;
     });
 
     $('input[name="offset"]').change(function() {

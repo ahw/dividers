@@ -26,3 +26,9 @@ block content
                     td #{item.timeHour}:#{item.timeMinute}:#{item.timeSecond} #{item.timeAmPm}
                     td #{item.duration}
                     td.text-light #{item.start}
+                    td
+                        a.pseudo-form.pseudo-submit(
+                            href='#',
+                            data-formid=item.start,
+                            data-action='/history/'+item.start,
+                            data-method='delete') DELETE

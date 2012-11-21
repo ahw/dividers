@@ -147,4 +147,24 @@ module.exports = function(app) {
         // Echo the request back.
         res.json(req.body);
     });
+
+    app.delete('/history/:timestamp', function(req, res) {
+
+        var timestamp = req.params.timestamp;
+        var response = {};
+
+        // Remove this timestamp from the TIMESTAMPS sorted set.
+        db.zrem(TIMESTAMPS, timestamp, function(error, reply) {
+            response[sprintf('ZREM TIMESTAMPS %s', timestamp)] = error ? error : 'success';
+
+            // Remove the associated event.
+            db.del('event:' + timestamp, function(error, reply) {
+                response[sprintf('DEL event:%s', timestamp)] = error ? error : 'success';
+
+                res.json(response);
+            });
+        });
+
+    });
+
 };
