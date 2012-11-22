@@ -69,4 +69,9 @@ module.exports = function(app) {
 
     });
 
+    app.get('/visualize', function(req, res) {
+
+        res.render('visualize');
+    });
+
 };

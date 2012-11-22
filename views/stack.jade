@@ -1,7 +1,11 @@
 extends layout
 
 block content
-    h1 visualize/stack
+    h1 
+        a(href='/visualize') visualize
+        /
+        a(href='/visualize/stack') stack
+
     p: a(href='/events') events
     div#visualize-stack
         - var prevDateString = ""
