@@ -10,26 +10,25 @@ block content
                 //- If this item represents a day different than the
                 //- previous day, then give the "tr" element a different
                 //- class name so we can style it accordingly.
-                - var dateString = item.timeDay + item.timeMonth + item.timeDate
+                - var dateString = item.start.day + item.start.month + item.start.date
                 - var newDay = dateString != prevDateString
                 - var newDayClass = newDay ? 'newDay' : '';
-                - var scaledHeight = (parseInt(item.duration) / (24 * 60 * 60 * 1000)) * 1000;
                 if newDay
                     - prevDateString = dateString
-                tr(class=newDayClass, data-duration=item.duration, style='height:' + scaledHeight + 'px')
+                tr(class=newDayClass, data-duration=item.duration.milis)
                     //- Either display "parent:child" or just "parent"
                     td #{item.name}
 
                     if newDay
-                        td #{item.timeDay}, #{item.timeMonth} #{item.timeDate}
+                        td #{item.start.day}, #{item.start.month} #{item.start.date}
                     else
                         td
-                    td #{item.timeHour}:#{item.timeMinute}:#{item.timeSecond} #{item.timeAmPm}
-                    td #{item.durationString}
-                    td.text-light #{item.start}
+                    td #{item.start.hour}:#{item.start.minute}:#{item.start.second} #{item.start.amPm}
+                    td #{item.duration.humanized}
+                    td.text-light #{item.start.millis}
                     td
                         a.pseudo-form.pseudo-submit(
                             href='#',
-                            data-formid=item.start,
-                            data-action='/history/'+item.start,
+                            data-formid=item.start.millis,
+                            data-action='/history/'+item.start.millis,
                             data-method='delete') DELETE

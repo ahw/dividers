@@ -30,29 +30,33 @@ module.exports = function(app) {
                 for (var i = 0; i < (reply.length / 4); i++) {
                     var name = reply[4 * i + 1];
                     var start = parseInt(reply[4 * i + 2]);
-                    var duration = parseInt(reply[4 * i + 3]);
+                    var durationMillis = parseInt(reply[4 * i + 3]);
                     // Use MomentJS to format the start time to human-friendly.
                     var m = moment(start);
-                    var timeFormatted = m.format('ddd MMM Do, h:mm:ss a');
-                    var durationString;
-                    if (duration) {
-                        durationString = moment.duration(duration, 'milliseconds').humanize(); // Thank you, MomentJS!
+                    var startFormatted = m.format('ddd MMM Do, h:mm:ss a');
+                    var durationHumanized;
+                    if (durationMillis) {
+                        durationHumanized = moment.duration(durationMillis, 'milliseconds').humanize(); // Thank you, MomentJS!
                     } else {
-                        durationString = 'Ongoing...';
+                        durationHumanized = 'Ongoing...';
                     }
                     history.push({
                         name : name,
-                        start : start,
-                        durationString : durationString,
-                        duration : duration,
-                        timeFormatted : timeFormatted,
-                        timeDay    : m.format('dddd'),
-                        timeMonth  : m.format('MMM'),
-                        timeDate   : m.format('Do'),
-                        timeHour   : m.format('h'),
-                        timeMinute : m.format('mm'),
-                        timeSecond : m.format('ss'),
-                        timeAmPm   : m.format('a')
+                        duration : {
+                            humanized : durationHumanized,
+                            millis : durationMillis
+                        },
+                        start : {
+                            millis : start,
+                            formatted : startFormatted,
+                            day    : m.format('dddd'),
+                            month  : m.format('MMM'),
+                            date   : m.format('Do'),
+                            hour   : m.format('h'),
+                            minute : m.format('mm'),
+                            second : m.format('ss'),
+                            amPm   : m.format('a')
+                        }
                     });
                 }
                 callback(history);
@@ -66,7 +70,16 @@ module.exports = function(app) {
 
         getHistory(function(history) {
             var context = { history : history };
-            res.render('history', context);
+            if (req.accepts('html')) {
+                console.log('Client accepts html');
+                res.render('history', context);
+            } else if (req.accepts('json')) {
+                console.log('Client accepts json');
+                res.json(history);
+            } else {
+                console.log('Client does not accept html, does not accept json');
+                res.render('history', context);
+            }
         }, startTime, startTime);
 
     });
