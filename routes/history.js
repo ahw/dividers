@@ -26,7 +26,8 @@ module.exports = function(app) {
                 history.push({
                     name : name,
                     start : start,
-                    duration : durationString,
+                    durationString : durationString,
+                    duration : duration,
                     timeFormatted : timeFormatted,
                     timeDay    : m.format('dddd'),
                     timeMonth  : m.format('MMM'),
@@ -121,12 +122,12 @@ module.exports = function(app) {
                         var current = parseInt(reply[1]);
                         var durationPrevious = current - prev;
                         db.hmset('event:' + prev, 'duration', durationPrevious);
-                        console.log(sprintf('[Updating a previous event\'s duration]\n\tHMSET %s\n\t\tduration %s', 'event:' + prev, durationPrevious));
+                        console.log(sprintf('[Updating a previous event\'s duration]\n\tHMSET %s duration %s', 'event:' + prev, durationPrevious));
                         db.hmset('event:' + current,
                             'name', name,
                             'start', startTime
                         );
-                        console.log(sprintf('[Inserting a new event without duration]\n\tHMSET %s\n\t\tname %s\n\t\tstart %s', 'event:' + current, name, startTime));
+                        console.log(sprintf('[Inserting a new event without duration]\n\tHMSET %s name %s start %s', 'event:' + current, name, startTime));
                     }
 
                     if (hasNext) {

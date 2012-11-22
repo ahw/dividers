@@ -13,9 +13,10 @@ block content
                 - var dateString = item.timeDay + item.timeMonth + item.timeDate
                 - var newDay = dateString != prevDateString
                 - var newDayClass = newDay ? 'newDay' : '';
+                - var scaledHeight = (parseInt(item.duration) / (24 * 60 * 60 * 1000)) * 1000;
                 if newDay
                     - prevDateString = dateString
-                tr(class=newDayClass)
+                tr(class=newDayClass, data-duration=item.duration, style='height:' + scaledHeight + 'px')
                     //- Either display "parent:child" or just "parent"
                     td #{item.name}
 
@@ -24,7 +25,7 @@ block content
                     else
                         td
                     td #{item.timeHour}:#{item.timeMinute}:#{item.timeSecond} #{item.timeAmPm}
-                    td #{item.duration}
+                    td #{item.durationString}
                     td.text-light #{item.start}
                     td
                         a.pseudo-form.pseudo-submit(
