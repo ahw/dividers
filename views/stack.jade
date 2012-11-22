@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    h1 visualize/stack
+    p: a(href='/events') events
+    div#visualize-stack
+        - var prevDateString = ""
+        div.left-column(style="float:left; width:50%; display:block")
+            each item in history
+                - var scaledHeight = (parseInt(item.duration) / (24 * 60 * 60 * 1000)) * 1000;
+                - var isEmpty = item.name == 'stop' || item.name == 'not:previous'? true : false;
+                    if isEmpty
+                        div(style='width:100%; background-color:#fff; display:block; float:left; height:' + scaledHeight + 'px')
+                    else
+                        div(style='width:100%; background-color:#aaa; display:block; float:left; height:' + scaledHeight + 'px')
+
+                    div(style='width:100%; display:block; float:left; height:5px')
+
+        div.right-column(style="float:left; width:48%; padding:0 1%; display:block")
+            each item in history
+                - var scale = parseInt(item.duration) / (24 * 60 * 60 * 1000);
+                - var scaledHeight = scale * 1000;
+                - var isEmpty = item.name == 'stop' || item.name == 'not:previous'? true : false;
+                - var scaledFontSize = scale * 720;
+                - var fontSize = Math.max(scaledFontSize, 14); // Use at least 14px font size.
+                if isEmpty
+                    div(style='width:100%; background-color:#fff; display:block; float:left; height:' + scaledHeight + 'px')
+                else
+                    div(style='width:100%; background-color:#fff; display:block; float:left; font-size:' + fontSize + 'px ; height:' + scaledHeight + 'px') #{item.name}
+                div(style='width:100%; display:block; float:left; height:5px')
