@@ -1,12 +1,6 @@
 extends layout
-
 block content
-    h1 
-        a(href='/visualize') visualize
-        /
-        a(href='/visualize/stack') stack
 
-    p: a(href='/events') events
     div#visualize-stack
         - var prevDateString = ""
         div.left-column(style="float:left; width:50%; display:block")

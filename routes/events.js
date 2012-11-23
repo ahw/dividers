@@ -10,7 +10,6 @@ module.exports = function(app) {
             }
 
             var context = {
-                title : 'dividers',
                 events : events
             };
             res.render('index', context);
