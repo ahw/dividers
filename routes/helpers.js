@@ -38,7 +38,8 @@ module.exports = function(app) {
                     if (durationMillis) {
                         durationHumanized = moment.duration(durationMillis, 'milliseconds').humanize(); // Thank you, MomentJS!
                     } else {
-                        durationHumanized = 'Ongoing...';
+                        var durationSoFar = Date.now() - start;
+                        durationHumanized = moment.duration(durationSoFar, 'milliseconds').humanize() + ' so far...';
                     }
                     history.push({
                         name : name,

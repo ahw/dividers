@@ -7,6 +7,10 @@ tr.newDay td {
     border-top:1px solid black;
 }
 
+input {
+    margin-right:4px;
+}
+
 input[name="offset"] {
     margin:0 2px;
     width:2em;
@@ -22,4 +26,26 @@ select {
 
 .nav {
     color: #ddd;
+}
+
+.stack-block {
+    width:100%;
+    margin:0;
+    margin-bottom:5px;
+    background-color:#aaa;
+    display:block;
+    float:left;
+}
+
+.empty {
+    background-color:#fff;
+}
+
+.stack-text {
+    width:100%;
+    margin:0;
+    margin-bottom:5px;
+    background-color:#fff;
+    display:block;
+    float:left;
 }

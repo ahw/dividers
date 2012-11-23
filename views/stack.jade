@@ -14,9 +14,13 @@ block content
                 - var scaledHeight = scale * 1000;
                 - var isEmpty = item.name == 'stop' || item.name == 'not:previous'? true : false;
                     if isEmpty
-                        div(data-name=item.name, style='width:100%; margin:0; margin-bottom:5px; background-color:#fff; display:block; float:left; height:' + scaledHeight + 'px')
+                        div.stack-block.empty(
+                            data-name=item.name,
+                            style='height:' + scaledHeight + 'px')
                     else
-                        div(data-name=item.name, style='width:100%; margin:0; margin-bottom:5px; background-color:#aaa; display:block; float:left; height:' + scaledHeight + 'px')
+                        div.stack-block(
+                            data-name=item.name,
+                            style='height:' + scaledHeight + 'px')
 
         div.right-column(style="float:left; width:48%; padding:0 1%; display:block")
             each item in history
@@ -31,6 +35,8 @@ block content
                 - var scaledFontSize = scale * 720;
                 - var fontSize = Math.max(scaledFontSize, 14); // Use at least 14px font size.
                 if isEmpty
-                    div(data-name=item.name, style='width:100%; margin:0; margin-bottom:5px; background-color:#fff; display:block; float:left; height:' + scaledHeight + 'px')
+                    div.stack-text(data-name=item.name, style='height:' + scaledHeight + 'px')
                 else
-                    div(data-name=item.name, style='width:100%; margin:0; margin-bottom:5px; background-color:#fff; display:block; float:left; font-size:' + fontSize + 'px ; height:' + scaledHeight + 'px') #{item.name}
+                    div.stack-text(
+                        data-name=item.name,
+                        style='font-size:' + fontSize + 'px ; height:' + scaledHeight + 'px') #{item.name}
