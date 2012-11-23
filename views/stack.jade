@@ -12,10 +12,10 @@ block content
         div.left-column(style="float:left; width:50%; display:block")
             each item in history
                 - var scale;
-                - if (item.duration) {
-                    - scale = parseInt(item.duration) / (24 * 60 * 60 * 1000);
+                - if (item.duration.millis) {
+                    - scale = parseInt(item.duration.millis) / (24 * 60 * 60 * 1000);
                 - } else {
-                    - scale = (Date.now() - item.start) / (24 * 60 * 60 * 1000);
+                    - scale = (Date.now() - item.start.millis) / (24 * 60 * 60 * 1000);
                 - }
                 - var scaledHeight = scale * 1000;
                 - var isEmpty = item.name == 'stop' || item.name == 'not:previous'? true : false;
@@ -27,10 +27,10 @@ block content
         div.right-column(style="float:left; width:48%; padding:0 1%; display:block")
             each item in history
                 - var scale;
-                - if (item.duration) {
-                    - scale = parseInt(item.duration) / (24 * 60 * 60 * 1000);
+                - if (item.duration.millis) {
+                    - scale = parseInt(item.duration.millis) / (24 * 60 * 60 * 1000);
                 - } else {
-                    - scale = (Date.now() - item.start) / (24 * 60 * 60 * 1000);
+                    - scale = (Date.now() - item.start.millis) / (24 * 60 * 60 * 1000);
                 - }
                 - var scaledHeight = scale * 1000;
                 - var isEmpty = item.name == 'stop' || item.name == 'not:previous'? true : false;

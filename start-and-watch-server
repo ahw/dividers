@@ -1,21 +1,22 @@
 #!/bin/bash
 
-node app.js &
-OLD_CONTENTS=`cat *.js`
-NEW_CONTENTS=`cat *.js`
+forever restart app.js
+OLD_CONTENTS=`cat *.js */*.js`
+NEW_CONTENTS=`cat *.js */*.js`
 
 while [ true ]
 do
-    NEW_CONTENTS=`cat *.js`
+    NEW_CONTENTS=`cat *.js */*.js`
     if [ "$OLD_CONTENTS" != "$NEW_CONTENTS" ]; then
         # Assert: code has changed. Bounce server.
         OLD_CONTENTS=$NEW_CONTENTS
         echo "Bouncing server..."
-        PID=`ps -a | grep node | grep -o \\[0-9\\]\\\+ | head -1`
-        kill $PID
-        node app.js &
-        PID=`ps -a | grep node | grep -o \\[0-9\\]\\\+ | head -1`
-        echo "PID = ${PID}"
+        forever restart app.js
+        # PID=`ps -a | grep node | grep -o \\[0-9\\]\\\+ | head -1`
+        # kill $PID
+        # node app.js &
+        # PID=`ps -a | grep node | grep -o \\[0-9\\]\\\+ | head -1`
+        # echo "PID = ${PID}"
     fi
-    sleep 1
+    sleep 5
 done
