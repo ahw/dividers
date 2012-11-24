@@ -5,7 +5,7 @@ var port = 4000;
 var securePort = 4443;
 var app = express();
 var fs = require('fs');
-var crypto = require('crypto');
+crypto = require('crypto');
 sprintf = require('sprintf').sprintf; // Globally available.
 moment = require('moment'); // Globally available.
 
@@ -22,6 +22,7 @@ db.on("error", function(err) {
 });
 TIMESTAMPS = 'TIMESTAMPS'; // Globally available.
 EVENTS = 'EVENTS'; // Globally available.
+TOKENS = 'TOKENS'; // Globally available.
 
 // Use jade templating.
 app.set('view engine', 'jade');
@@ -35,12 +36,36 @@ checkAuth = function(req, res, next) {
 
     if (!req.session.is_logged_in) {
         console.log('[AUTH] Authentication failed.');
-        res.redirect('/login');
+
+        // Check if the user has a valid public-access token.
+        var token = req.query.token;
+        if (token) {
+            db.sismember(TOKENS, token, function(error, reply) {
+                if (reply) {
+                    // Assert: token is a valid token.
+                    console.log('[AUTH] User has valid token ' + token);
+
+                    // Test if the current URL is a member of this token
+                    // set.
+                    db.sismember('TOKENSET:' + token, req.url, function(error, reply) {
+                        if (reply) {
+                            next();
+                        } else {
+                            res.render('login', { message : 'You do not have permission to view this URL' });
+                        }
+                    });
+                } else {
+                    res.render('login', {message : 'Invalid token'});
+                }
+            });
+        } else {
+            res.redirect('/login');
+        }
     } else {
         console.log('[AUTH] Authentication passed.');
         next();
     }
-}
+};
 
 app.get('/login', function(req, res) {
     if (req.session.is_logged_in == true) {

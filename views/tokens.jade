@@ -1,0 +1,41 @@
+extends layout
+block content
+
+    h1(style='color:#aaa') tokens
+
+    form.form-horizontal(method='POST', action='/tokens')
+        .control-group
+            label.control-label List of URLs
+            .controls
+                textarea.input-xxlarge(name='urls', rows='10', placeholder='List of URLs')
+
+        .control-group
+            label.control-label Lifespan
+            .controls
+                input.input-xxlarge(name='ttl', type='text', placeholder='Lifespan')
+
+        .control-group
+            label.control-label Units
+            .controls
+                select.select(name='ttlunits')
+                    option(value='seconds') seconds
+                    option(value='hours') hours
+                    option(value='days') days
+
+        .control-group
+            .controls
+                input.btn-primary.btn(type='submit', value='New Token')
+        
+    //- allTokenSets : { 123123 : [url1, url2, url3], 329234 : [url1, url5, url8] }
+    each urlList, token in allTokenSets
+        h2= token
+            &nbsp;
+            a.pseudo-form.pseudo-submit(
+                href='#',
+                style='font-size:14px',
+                data-formid=token
+                data-action='/tokens/' + token,
+                data-method='delete') DELETE
+        each item in urlList
+            p(style='margin-left:4em')
+                a(href=item) #{item}
