@@ -54,7 +54,7 @@ module.exports = function(app) {
     app.post('/tokens', checkAuth, function(req, res) {
         var urls = req.body.urls.split('\n');
         var ttl = req.body.ttl;
-        ttl = ttl ? parseInt(ttl) : 3600; // Defaults to 3600 seconds (1 hour)
+        ttl = ttl ? parseInt(ttl) : false; // Default to infinite lifespan.
         var ttlUnits = req.body.ttlunits;
 
         // Convert all time units to seconds
@@ -87,8 +87,10 @@ module.exports = function(app) {
                 multi.sadd('TOKENSET:' + hashValue, url);
             }
 
-            // Set the expiration value.
-            multi.expire('TOKENSET:' + hashValue, ttl);
+            // Set the expiration value if there is one.
+            if (ttl) {
+                multi.expire('TOKENSET:' + hashValue, ttl);
+            }
 
             multi.exec(function(error, reply) {
                 res.redirect('/tokens');
