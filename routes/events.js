@@ -1,6 +1,6 @@
 module.exports = function(app) {
 
-    app.get('/events', function(req, res) {
+    app.get('/events', checkAuth, function(req, res) {
 
         db.sort(EVENTS, 'ALPHA', function(error, reply) {
 
@@ -16,7 +16,7 @@ module.exports = function(app) {
         });
     });
 
-    app.post('/events', function(req, res) {
+    app.post('/events', checkAuth, function(req, res) {
 
         var name = req.body.name;
         console.log(sprintf('Adding %s to EVENTS', name));
@@ -29,7 +29,7 @@ module.exports = function(app) {
         });
     });
 
-    app.delete('/events', function(req, res) {
+    app.delete('/events', checkAuth, function(req, res) {
 
         var name = req.body.name;
         db.srem(EVENTS, name, function(error, reply) {

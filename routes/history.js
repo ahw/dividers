@@ -1,6 +1,6 @@
 module.exports = function(app) {
 
-    app.get('/history/:timestamp?', function(req, res) {
+    app.get('/history/:timestamp?', checkAuth, function(req, res) {
 
         var startTime = req.params.timestamp ? req.params.timestamp : null;
 
@@ -21,7 +21,7 @@ module.exports = function(app) {
     });
 
 
-    app.post('/history', function(req, res) {
+    app.post('/history', checkAuth, function(req, res) {
         var name = req.body.name;
         var offset = req.body.offset;
         offset = offset ? parseInt(offset) : 0; // Offset defaults to 0.
@@ -112,7 +112,7 @@ module.exports = function(app) {
         res.json(req.body);
     });
 
-    app.delete('/history/:timestamp', function(req, res) {
+    app.delete('/history/:timestamp', checkAuth, function(req, res) {
 
         var timestamp = req.params.timestamp;
         var response = {};

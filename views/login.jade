@@ -1,0 +1,8 @@
+extends layout
+block content
+
+    h1.center-text(style='color:#aaa')= message
+    form.form-inline.center-text(method='POST', action='/login')
+        input.input(name='username', placeholder='Username', type='text')
+        input.input(name='password', placeholder='Password', type='password')
+        button.btn-primary.btn(type='submit') Login

@@ -49,3 +49,7 @@ select {
     display:block;
     float:left;
 }
+
+.center-text {
+    text-align:center;
+}
