@@ -2,9 +2,6 @@ module.exports = function(app) {
 
     app.get('/history/:timestamp?', checkAuth, function(req, res) {
 
-        console.log('req.path => ' + req.path);
-        console.log('req.query => ' + req.query);
-        console.log('req.url => ' + req.url);
         var startTime = req.params.timestamp ? req.params.timestamp : null;
 
         getHistory(function(history) {
