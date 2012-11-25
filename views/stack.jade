@@ -14,7 +14,7 @@ block content
                 - var scaledHeight = scale * 1000;
                 - var isEmpty = item.name == 'stop' || item.name == 'not:previous'? true : false;
                     if isEmpty
-                        div.stack-block.empty(
+                        div.empty(
                             data-name=item.name,
                             style='height:' + scaledHeight + 'px')
                     else

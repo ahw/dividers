@@ -35,17 +35,20 @@ select {
     background-color:#aaa;
     display:block;
     float:left;
+    box-shadow: 2px 2px 50px 3px #ccc;
 }
 
 .empty {
-    background-color:#fff;
+    margin:0;
+    margin-bottom:5px;
+    float:left;
+    width:100%;
 }
 
 .stack-text {
     width:100%;
     margin:0;
     margin-bottom:5px;
-    background-color:#fff;
     display:block;
     float:left;
 }
