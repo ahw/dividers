@@ -53,17 +53,16 @@ checkAuth = function(req, res, next) {
                             next();
                         } else {
                             console.log('[AUTH] Authorization failed, token has likely expired');
-                            res.render('login', { message : 'You do not have permission to view this URL' });
+                            res.render('error', { message : 'This token doesn\'t work for this URL (it may have expired).' });
                         }
                     });
                 } else {
                     console.log('[AUTH] User has invalid token ' + token);
-                    res.render('login', {message : 'Invalid token'});
+                    res.render('error', {message : 'It appears you have an invalid token.'});
                 }
             });
         } else {
-            console.log('[AUTH] Redirecting to /login');
-            res.redirect('/login');
+            res.render('error', { message : 'I\'m really the only user of this tool. Most of the functionality is blocked.' });
         }
     } else {
         console.log('[AUTH] Authentication passed.');
