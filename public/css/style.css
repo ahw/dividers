@@ -32,24 +32,50 @@ select {
     width:100%;
     margin:0;
     margin-bottom:5px;
-    background-color:#aaa;
+    background-color:#333;
     display:block;
     float:left;
+    /* box-shadow: 2px 2px 50px 3px #555; */
 }
 
 .empty {
-    background-color:#fff;
+    margin:0;
+    margin-bottom:5px;
+    float:left;
+    width:100%;
 }
 
 .stack-text {
     width:100%;
     margin:0;
     margin-bottom:5px;
-    background-color:#fff;
     display:block;
     float:left;
 }
 
 .center-text {
     text-align:center;
+}
+
+.day-row {
+    width:80%;
+    height:40px;
+    display:block;
+    margin:0;
+    margin:auto;
+    clear:both;
+}
+
+.day-block {
+    background-color:#333;
+    float:left;
+    height:40px;
+    display:block;
+    margin-top:1px;
+    margin-right:1px;
+    color:white;
+}
+
+.day-block-empty {
+    background-color:white;
 }
