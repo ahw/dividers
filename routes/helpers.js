@@ -1,6 +1,10 @@
 module.exports = function(app) {
 
-    getHistory = function(callback, startTime, endTime) {
+    getHistoryByDay = function(callback) {
+        getHistory(callback, 0, 0, 'day');
+    };
+
+    getHistory = function(callback, startTime, endTime, grouping) {
 
         var startTime = startTime ? startTime : 0;
         var endTime = endTime ? endTime : 0;
@@ -27,6 +31,11 @@ module.exports = function(app) {
                 'GET', 'event:*->duration',
                 function(error, reply) {
 
+                var firstEntryStart = parseInt(reply[2]);
+                var previousDayString = moment(firstEntryStart).format('YYYY-MM-DD');
+                console.log('[HELPER] getHistory() previousDayString initially = ' + previousDayString);
+                var day = [];
+
                 for (var i = 0; i < (reply.length / 4); i++) {
                     var name = reply[4 * i + 1];
                     var start = parseInt(reply[4 * i + 2]);
@@ -35,13 +44,16 @@ module.exports = function(app) {
                     var m = moment(start);
                     var startFormatted = m.format('ddd MMM Do, h:mm:ss a');
                     var durationHumanized;
+                    var dayString = m.format('YYYY-MM-DD');
                     if (durationMillis) {
                         durationHumanized = moment.duration(durationMillis, 'milliseconds').humanize(); // Thank you, MomentJS!
                     } else {
                         var durationSoFar = Date.now() - start;
                         durationHumanized = moment.duration(durationSoFar, 'milliseconds').humanize() + ' so far...';
                     }
-                    history.push({
+
+                    // The item representing an event.
+                    var item = {
                         name : name,
                         duration : {
                             humanized : durationHumanized,
@@ -58,7 +70,34 @@ module.exports = function(app) {
                             second : m.format('ss'),
                             amPm   : m.format('a')
                         }
-                    });
+                    };
+
+                    if (grouping == 'day') {
+                        // In this case, the history struct will be a list
+                        // of lists; one list for each day of history,
+                        // containing all the events which started on that
+                        // particular day.
+
+                        if (dayString != previousDayString) {
+                            // Reset the day string.
+                            previousDayString = dayString;
+                            // Push the "day" struct.
+                            history.push(day);
+                            // Start with a blank day again.
+                            day = [];
+                            // Push this item onto the new day.
+                            day.push(item);
+                        } else {
+                            // Assert: this item was started on the same day as the
+                            // previous; just push it to the same day struct.
+                            day.push(item);
+                        }
+
+                    } else {
+                        // In this case, the history struct will be a single
+                        // list containing all the events.
+                        history.push(item);
+                    }
                 }
                 callback(history);
             });
