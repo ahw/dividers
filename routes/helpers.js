@@ -42,6 +42,8 @@ module.exports = function(app) {
                     var durationMillis = parseInt(reply[4 * i + 3]);
                     // Use MomentJS to format the start time to human-friendly.
                     var m = moment(start);
+                    var startOfDay = m.sod();
+                    var offsetFromSod = m.diff(startOfDay);
                     var startFormatted = m.format('ddd MMM Do, h:mm:ss a');
                     var durationHumanized;
                     var dayString = m.format('YYYY-MM-DD');
@@ -59,6 +61,7 @@ module.exports = function(app) {
                             humanized : durationHumanized,
                             millis : durationMillis
                         },
+                        offsetFromSod : offsetFromSod,
                         start : {
                             millis : start,
                             formatted : startFormatted,
@@ -86,11 +89,11 @@ module.exports = function(app) {
                             // Start with a blank day again.
                             day = [];
                             // Push this item onto the new day.
-                            day.push(item);
+                            day.unshift(item);
                         } else {
                             // Assert: this item was started on the same day as the
                             // previous; just push it to the same day struct.
-                            day.push(item);
+                            day.unshift(item);
                         }
 
                     } else {

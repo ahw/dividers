@@ -1,0 +1,34 @@
+extends layout
+block content
+
+    div#visualize-dividers
+        - var previousDay = "";
+        each day in historyByDay
+            - var offset = day[0].offsetFromSod;
+            - offset = offset / (36 * 60 * 60 * 10);
+            div.day-row(style='position:relative; left:' + offset + '%')
+                each item in day
+                    //- Scale items such that 24 hours = 100%.
+                    - var scale;
+                    - if (item.duration.millis) {
+                        //- Can use the item's duration
+                        - scale = parseInt(item.duration.millis) / (36 * 60 * 60 * 10);
+                    - } else {
+                        //- Assert: item has no duration, so calculate how long its
+                        //- been so far.
+                        - scale = (Date.now() - item.start.millis) / (36 * 60 * 60 * 10);
+                    - }
+
+                    - var classString = 'day-block';
+                    - if (item.name == 'stop' || item.name == 'not:previous') {
+                        - classString += ' day-block-empty';
+                    - }
+                    
+
+                    - var styleString = sprintf('width:%s%%', scale);
+                        div(
+                            class=classString,
+                            data-name=item.name,
+                            data-start-formatted=item.start.formatted,
+                            data-duration-humanized=item.duration.humanized,
+                            style=styleString) #{item.name}
