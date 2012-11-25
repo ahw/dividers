@@ -49,16 +49,20 @@ checkAuth = function(req, res, next) {
                     // set.
                     db.sismember('TOKENSET:' + token, req.url, function(error, reply) {
                         if (reply) {
+                            console.log('[AUTH] Authorization success');
                             next();
                         } else {
+                            console.log('[AUTH] Authorization failed, token has likely expired');
                             res.render('login', { message : 'You do not have permission to view this URL' });
                         }
                     });
                 } else {
+                    console.log('[AUTH] User has invalid token ' + token);
                     res.render('login', {message : 'Invalid token'});
                 }
             });
         } else {
+            console.log('[AUTH] Redirecting to /login');
             res.redirect('/login');
         }
     } else {

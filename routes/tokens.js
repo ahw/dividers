@@ -32,22 +32,6 @@ module.exports = function(app) {
             }
         });
 
-        // --- db.smembers(TOKENS, function(error, reply) {
-        // ---     var numTokens = reply.length;
-        // ---     for(var i = 0; i < reply.length; i++) {
-        // ---         var token = reply[i];
-        // ---         console.log('[TOKENS] Token = ' + token);
-        // ---         db.smembers('TOKENSET:' + token, function(error, reply) {
-        // ---             console.log('[TOKENS] URLs = ' + reply);
-        // ---             allTokenSets[token] = reply;
-
-        // ---             if (Object.keys(allTokenSets).length == numTokens) {
-        // ---                 // If we've gotten all the tokens, render the page.
-        // ---                 res.render('tokens', { allTokenSets : allTokenSets });
-        // ---             }
-        // ---         });
-        // ---     }
-        // --- });
     });
 
 
@@ -70,8 +54,6 @@ module.exports = function(app) {
         var shasum = crypto.createHash('sha1');
         shasum.update(req.body.urls + Date.now())
         var hashValue = shasum.digest('hex');
-        console.log('[TOKENS] Creating token for ' + urls);
-        console.log('[TOKENS] Time to live = ' + ttl + ' seconds');
         db.sadd(TOKENS, hashValue, function(error, reply) {
 
             var multi = db.multi();
@@ -84,12 +66,16 @@ module.exports = function(app) {
                     // Assert: no query string
                     url += '?token=' + hashValue;
                 }
+                console.log('[TOKENS] Creating token for ' + url);
                 multi.sadd('TOKENSET:' + hashValue, url);
             }
 
             // Set the expiration value if there is one.
             if (ttl) {
+                console.log('[TOKENS] Setting time to live: ' + ttl + ' seconds');
                 multi.expire('TOKENSET:' + hashValue, ttl);
+            } else {
+                console.log('[TOKENS] Setting time to live: forever');
             }
 
             multi.exec(function(error, reply) {

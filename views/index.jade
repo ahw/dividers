@@ -9,32 +9,38 @@ block content
                 button.btn.btn-primary(type='submit') Create
 
         table.table
-            each item in events
+            thead
                 tr
-                        td
-                            a.pseudo-form.pseudo-submit(
-                                href='#',
-                                data-formid=item.name,
-                                data-action='/history',
-                                data-method='post') #{item.name}
+                    th Name
+                    th Offset
+                    th Action
+            tbody
+                each item in events
+                    tr
+                            td
+                                a.pseudo-form.pseudo-submit(
+                                    href='#',
+                                    data-formid=item.name,
+                                    data-action='/history',
+                                    data-method='post') #{item.name}
 
-                            input.pseudo-form(
-                                data-formid=item.name,
-                                type='hidden',
-                                name='name',
-                                value=item.name)
-                        td
-                            input.pseudo-form(
-                                data-formid=item.name,
-                                name='offset',
-                                type='text',
-                                placeholder='0')
-                            select.pseudo-form(name='offsetunits', data-formid=item.name)
-                                option(value='seconds') seconds
-                                option(value='minutes') minutes
-                                option(value='hours') hours
-                                option(value='days') days
-                        td
-                            a.event-delete(
-                                href='#',
-                                data-name=item.name) DELETE
+                                input.pseudo-form(
+                                    data-formid=item.name,
+                                    type='hidden',
+                                    name='name',
+                                    value=item.name)
+                            td
+                                input.pseudo-form(
+                                    data-formid=item.name,
+                                    name='offset',
+                                    type='text',
+                                    placeholder='0')
+                                select.pseudo-form(name='offsetunits', data-formid=item.name)
+                                    option(value='seconds') seconds
+                                    option(value='minutes') minutes
+                                    option(value='hours') hours
+                                    option(value='days') days
+                            td
+                                a.event-delete(
+                                    href='#',
+                                    data-name=item.name) DELETE

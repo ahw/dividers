@@ -7,7 +7,7 @@ block content
         .control-group
             label.control-label List of URLs
             .controls
-                textarea.input-xxlarge(name='urls', rows='10', placeholder='List of URLs')
+                textarea.input-xxlarge(name='urls', rows='10', placeholder='List of relative URLs')
 
         .control-group
             label.control-label Lifespan
@@ -27,16 +27,26 @@ block content
             .controls
                 input.btn-primary.btn(type='submit', value='New Token')
         
-    //- allTokenSets : { 123123 : [url1, url2, url3], 329234 : [url1, url5, url8] }
-    each urlList, token in allTokenSets
-        h2= token
-            &nbsp;
-            a.pseudo-form.pseudo-submit(
-                href='#',
-                style='font-size:14px',
-                data-formid=token
-                data-action='/tokens/' + token,
-                data-method='delete') DELETE
-        each item in urlList
-            p(style='margin-left:4em')
-                a(href=item) #{item}
+    table.table
+        thead
+            tr
+                th Token
+                th Locations
+                th Action
+        tbody
+            each urlList, token in allTokenSets
+                tr
+                    td(style='font-family:"Monospace",monospace')= token
+                    td
+                        each item in urlList
+                            //- I know, this isn't ideal hardcoding the protocol, host,
+                            //- and port like this.
+                            a(href='http://andrewhallagan.com:4000' + item) #{item}
+                            br
+                    td
+                        a.pseudo-form.pseudo-submit(
+                            href='#',
+                            style='font-size:14px',
+                            data-formid=token
+                            data-action='/tokens/' + token,
+                            data-method='delete') DELETE
