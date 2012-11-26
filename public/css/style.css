@@ -81,7 +81,7 @@ select {
 }
 
 .day-block[data-name=sleep] {
-    background-color:#ccc;
+    background-color:#ddd;
 }
 
 .day-block[data-name=work] {
@@ -107,4 +107,8 @@ select {
     width:100px;
     margin:auto;
     margin-top:9px;
+}
+
+.day-block[data-name^=exercise] {
+    background-color:royalBlue;
 }

@@ -43,7 +43,9 @@ module.exports = function(app) {
                     // Use MomentJS to format the start time to human-friendly.
                     var m = moment(start);
                     var startOfDay = m.sod();
+                    var endOfDay = m.eod();
                     var offsetFromSod = m.diff(startOfDay);
+                    var offsetFromEod = m.diff(endOfDay);
                     var startFormatted = m.format('ddd MMM Do, h:mm:ss a');
                     var durationHumanized;
                     var dayString = m.format('YYYY-MM-DD');
@@ -62,6 +64,7 @@ module.exports = function(app) {
                             millis : durationMillis
                         },
                         offsetFromSod : offsetFromSod,
+                        offsetFromEod : offsetFromEod,
                         start : {
                             millis : start,
                             formatted : startFormatted,
