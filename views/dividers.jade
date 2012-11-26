@@ -3,39 +3,20 @@ block content
 
     div#visualize-dividers
         - var previousDay = "";
-        - var eventFromYesterday = {};
         each day in historyByDay
-            //- if (eventFromYesterday.name) {
-            //    - day.unshift(eventFromYesterday);
-            //- }
-
-            - var sodOffset = day[0].offsetFromSod;
-            - sodOffset = sodOffset / (26 * 60 * 60 * 10);
-
-            - var lastEventIndex = day.length - 1;
-            - var lastItem = day[lastEventIndex];
-            - var eodOffset = lastItem.offsetFromEod;
-            - var durationPastEod = eodOffset + lastItem.duration.millis;
-            - var newStart = eodOffset + 1;
-            - lastItem.duration.millis = -1 * eodOffset;
-            //- eventFromYesterday = { name : lastItem.name, duration:durationPastEod, start:{millis : eodOffset + 10}};
-            //-     name : lastItem['name'],
-            //-     duration : durationPastEod,
-            //-     start : {
-            //-         millis : eodOffset + 1
-            //-     }
-            //- };
-            div.day-row(style='position:relative; left:' + sodOffset + '%')
+            - var offset = day[0].offsetFromSod;
+            - offset = offset / (36 * 60 * 60 * 10);
+            div.day-row(style='position:relative; left:' + offset + '%')
                 each item in day
-                    //- Scale items such that 26 hours = 100%.
+                    //- Scale items such that 36 hours = 100%.
                     - var scale;
                     - if (item.duration.millis) {
                         //- Can use the item's duration
-                        - scale = parseInt(item.duration.millis) / (26 * 60 * 60 * 10);
+                        - scale = parseInt(item.duration.millis) / (36 * 60 * 60 * 10);
                     - } else {
                         //- Assert: item has no duration, so calculate how long its
                         //- been so far.
-                        - scale = (Date.now() - item.start.millis) / (26 * 60 * 60 * 10);
+                        - scale = (Date.now() - item.start.millis) / (36 * 60 * 60 * 10);
                     - }
 
                     - var classString = 'day-block';
