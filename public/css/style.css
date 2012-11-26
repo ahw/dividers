@@ -79,3 +79,32 @@ select {
 .day-block-empty {
     background-color:white;
 }
+
+.day-block[data-name=sleep] {
+    background-color:#ccc;
+}
+
+.day-block[data-name=work] {
+    background-color:gold;
+}
+
+.day-block[data-name^=commute] {
+    background-color:green;
+}
+
+.day-block[data-name^=eat] {
+    background-color:orange;
+}
+
+.day-block label {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 4px 4px 4px 4px;
+    display: block;
+    font-size: 90%;
+    text-align: center;
+    position:relative;
+    z-index:100;
+    width:100px;
+    margin:auto;
+    margin-top:9px;
+}

@@ -28,7 +28,8 @@ block content
                     - var styleString = sprintf('width:%s%%', scale);
                         div(
                             class=classString,
+                            title=item.name,
                             data-name=item.name,
                             data-start-formatted=item.start.formatted,
                             data-duration-humanized=item.duration.humanized,
-                            style=styleString) #{item.name}
+                            style=styleString)

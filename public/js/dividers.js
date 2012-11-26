@@ -159,4 +159,13 @@ $(document).ready(function() {
         return false;
     });
 
+    /**
+     * Tool tip configuration.
+     */
+    $('.day-block[title!="stop"]').hover(function() {
+        $(this).append('<label>' + $(this).attr('data-name') + '</label>');
+    }, function() {
+        $(this).children('label').remove();
+    });
+
 });
