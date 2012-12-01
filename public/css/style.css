@@ -112,3 +112,7 @@ select {
 .day-block[data-name^=exercise] {
     background-color:royalBlue;
 }
+
+.day-block[data-name^=dacx-hack] {
+    background-color:gold;
+}

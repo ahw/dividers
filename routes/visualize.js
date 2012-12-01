@@ -7,7 +7,7 @@ module.exports = function(app) {
         });
     });
 
-    app.get('/visualize/dividers', checkAuth, function(req, res) {
+    app.get('/visualize/dividers', function(req, res) {
         getHistoryByDay(function(historyByDay) {
             var context = { historyByDay : historyByDay };
             res.render('dividers', context);
