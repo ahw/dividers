@@ -116,3 +116,11 @@ select {
 .day-block[data-name^=dacx-hack] {
     background-color:gold;
 }
+
+#new-event-form {
+    float:right;
+}
+
+#quick-event-form {
+    float:left;
+}

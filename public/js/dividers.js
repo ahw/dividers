@@ -159,6 +159,28 @@ $(document).ready(function() {
         return false;
     });
 
+    $('#quick-event-form').submit(function() {
+
+        var form = $(this);
+        $.ajax({
+            url : '/history',
+            type : 'POST',
+            data : {
+                quick_event : $(this).find('input[name="quick_event"]').val()
+            },
+            success : function(response) {
+                input = form.find('input[name="quick_event"]');
+                input.val('');
+                var originalColor = input.css('background-color');
+                input.css('background-color', 'yellow');
+                setTimeout(function() {
+                    input.animate({backgroundColor: originalColor}, 1000);
+                }, 500);
+            }
+        });
+        return false;
+    });
+
     /**
      * Tool tip configuration.
      */

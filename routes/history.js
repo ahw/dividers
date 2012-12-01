@@ -22,10 +22,19 @@ module.exports = function(app) {
 
 
     app.post('/history', checkAuth, function(req, res) {
-        var name = req.body.name;
-        var offset = req.body.offset;
-        offset = offset ? parseInt(offset) : 0; // Offset defaults to 0.
-        var offsetunits = req.body.offsetunits;
+
+        var name, offset, offsetunits;
+
+        if (req.body.quick_event) {
+            var info = req.body.quick_event.split(' ');
+            name = info[0];
+            offset = info[1] ? parseInt(info[1]) : 0;
+            offsetunits = info[2] ? info[2] : 'seconds';
+        } else {
+            name = req.body.name;
+            offset = req.body.offset ? parseInt(req.body.offset) : 0; // Offset defaults to 0.
+            offsetunits = req.body.offsetunits;
+        }
 
         switch(offsetunits) {
             case 'days':

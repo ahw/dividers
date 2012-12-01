@@ -5,7 +5,12 @@ block content
 
     div#event-list
 
-        form.form-inline(method='post', action='/events')
+        form#quick-event-form.form-inline(method='post', action='/history')
+            fieldset
+                input.input(name='quick_event', type='text', placeholder='Name Offset Units')
+                button.btn.btn-primary(type='submit') Post Event
+
+        form#new-event-form.form-inline(method='post', action='/events')
             fieldset
                 input.input(name='name', type='text', placeholder='Name')
                 button.btn.btn-primary(type='submit') Create
