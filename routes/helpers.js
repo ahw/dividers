@@ -106,11 +106,27 @@ module.exports = function(app) {
                             previousDayString = dayString;
                             // Append the "day" struct.
                             history.push(day);
+
+                            var totalMillis = 0;
+                            var date = day[0].start.formatted;
+                            day.forEach(function(item) {
+                                totalMillis += item.duration.millis;
+                            });
+                            if (totalMillis == 24 * 60 * 60 * 1000) {
+                                console.log('[HELPER] Total duration is a full 24 hours!');
+                            } else {
+                                console.warn('[HELPER] Total duration for ' + date + ' is not 24 hours : ' + totalMillis);
+                            }
                             // Start with a blank day again.
                             day = [];
                             // Push this item onto the new day.
                             day.push(item);
 
+                        } else if (i == (reply.length / 4 - 1)) {
+                            // Assert: we're on the last day. Push this day
+                            // strut to history even though its not fully
+                            // complete.
+                            history.push(day);
                         } else {
                             // Assert: this item was started on the same day as the
                             // previous; just push it to the same day struct.
