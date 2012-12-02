@@ -12,7 +12,12 @@ module.exports = function(app) {
             var context = {
                 events : events
             };
-            res.render('index', context);
+
+            if (isMobile(req)) {
+                res.render('mobile/index', context);
+            } else {
+                res.render('index', context);
+            }
         });
     });
 

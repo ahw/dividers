@@ -59,8 +59,11 @@ select {
     text-align:center;
 }
 
+#visualize-dividers {
+    border: 1px solid gray;
+}
+
 .day-row {
-    width:80%;
     height:40px;
     display:block;
     margin:0;
@@ -70,16 +73,15 @@ select {
 
 .day-block {
     background-color:#333;
-    float:left;
     height:40px;
     display:block;
-    margin-top:1px;
-    margin-right:1px;
     color:white;
+    float:left;
 }
 
 .day-block-empty {
     background-color:white;
+    background-color:#c00;
 }
 
 .day-block[data-name=sleep] {

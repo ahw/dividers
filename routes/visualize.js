@@ -2,7 +2,7 @@ module.exports = function(app) {
 
     app.get('/visualize/stack', checkAuth, function(req, res) {
         getHistory(function(history) {
-            var context = { history : history };
+            var context = { history : history.reverse() };
             res.render('stack', context);
         });
     });

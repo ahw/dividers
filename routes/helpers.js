@@ -24,7 +24,6 @@ module.exports = function(app) {
             var history = [];
             db.sort(TIMESTAMPS,
                 'LIMIT', startIndex, limit,
-                'DESC',
                 'GET', '#',
                 'GET', 'event:*->name',
                 'GET', 'event:*->start',
@@ -85,56 +84,37 @@ module.exports = function(app) {
                         // of lists; one list for each day of history,
                         // containing all the events which started on that
                         // particular day.
+                        if (splitAcrossDays && durationMillis + offsetFromEod > 0) {
+                            item.duration.millis = -1 * item.offsetFromEod;
+                            var newItem = {
+                                start : endOfDay + 1,
+                                name : name,
+                                durationMillis : durationMillis + offsetFromEod
+                            };
+
+                            console.log('[HELPER] Item duration truncated from '
+                                + moment.duration(durationMillis, 'milliseconds').humanize()
+                                + ' to '
+                                + moment.duration(newItem.durationMillis, 'milliseconds').humanize());
+                            console.log('[HELPER] New item inserted with start time '
+                                + moment(newItem.start).format('ddd MMM Do, h:mm:ss a'));
+                            reply.splice(4 * (i+1), 0, newItem.start, newItem.name, newItem.start, newItem.durationMillis);
+                        }
 
                         if (dayString != previousDayString) {
                             // Reset the day string.
                             previousDayString = dayString;
-                            // Push the "day" struct.
+                            // Append the "day" struct.
                             history.push(day);
                             // Start with a blank day again.
                             day = [];
                             // Push this item onto the new day.
-                            day.unshift(item);
-                        } else if (splitAcrossDays) {
-                            // Assert: its duration is too long.  Need to
-                            // split across to the next day.
-                            console.log(JSON.stringify(item));
-                            var oldDuration = item.duration.millis;
-                            item.duration.millis = Math.min(item.duration.millis, -1 * item.offsetFromEod);
-                            if (oldDuration != item.duration.millis) {
-                                console.log('[HELPER] Truncated duration from ' + oldDuration + ' to ' + item.duration.millis);
-                            }
-
-                            // var newStart = item.start + newDuration;
-                            // var newMoment = moment(newStart);
-                            // console.log('[HELPER] Start before split = ' + m.format('ddd MMM Do, h:mm:ss a'));
-                            // console.log('[HELPER] Start after split = ' + newMoment.format('ddd MMM Do, h:mm:ss a'));
-                            // var newDuration = item.duration.millis + item.offsetFromEod;
-                            // item.duration.millis = -1 * item.offsetFromEod;
-                            // day.unshift(item);
-
-                            // var newItem = {
-                            //     name : item.name,
-                            //     duration : {
-                            //         humanized : moment.duration(newDuration, 'milliseconds').humanize(),
-                            //         millis : newDuration
-                            //     },
-                            //     offsetFromSod : 0,
-                            //     offFromEod : -1,
-                            //     start : {
-                            //         millis : newStart
-                            //     }
-                            // };
-                            // history.push(day);
-                            // day = [];
-                            // day.unshift(newItem);
-                            // previousDayString = newMoment.format('YYYY-MM-DD');
-                            day.unshift(item);
+                            day.push(item);
 
                         } else {
                             // Assert: this item was started on the same day as the
                             // previous; just push it to the same day struct.
-                            day.unshift(item);
+                            day.push(item);
                         }
 
                     } else {
