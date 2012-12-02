@@ -5,7 +5,7 @@ module.exports = function(app) {
         var startTime = req.params.timestamp ? req.params.timestamp : null;
 
         getHistory(function(history) {
-            var context = { history : history };
+            var context = { history : history.reverse() };
             if (req.accepts('html')) {
                 console.log('Client accepts html');
                 res.render('history', context);

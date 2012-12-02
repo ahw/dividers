@@ -60,7 +60,6 @@ select {
 }
 
 #visualize-dividers {
-    border: 1px solid gray;
 }
 
 .day-row {
@@ -77,11 +76,11 @@ select {
     display:block;
     color:white;
     float:left;
+    margin-bottom:6px;
 }
 
 .day-block-empty {
-    background-color:white;
-    background-color:#c00;
+    background-image:url('/images/1-9-c3-pixel.png');
 }
 
 .day-block[data-name=sleep] {

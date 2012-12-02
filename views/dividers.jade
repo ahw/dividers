@@ -4,11 +4,9 @@ block content
     div#visualize-dividers
         - var previousDay = "";
         each day in historyByDay
-            - var offset = day[0].offsetFromSod;
-            - offset = offset / (24 * 60 * 60 * 10);
-            - offset = 0;
-            div.day-row(style='position:relative; left:' + offset + '%')
-                each item in day
+            div.day-row
+                - var numItems = day.length;
+                each item, index in day
                     //- Scale items such that 24 hours = 100%.
                     - var scale;
                     - if (item.duration.millis) {
@@ -26,11 +24,22 @@ block content
                     - }
                     
 
-                    - var styleString = sprintf('width:%s%%', scale);
+                    - var styleString;
+                    - if (index == numItems - 1) {
+                        //- If this is the last item for the day, let its
+                        //- width stretch to fill the right of the row.
+                        - styleString = sprintf('float:none');
+                    - } else {
+                        //- ...Otherwise, give it a specified width.
+                        - styleString = sprintf('width:%s%%', scale);
+                    - }
+
                         div(
                             class=classString,
                             title=item.name,
                             data-name=item.name,
                             data-start-formatted=item.start.formatted,
+                            data-start-millis=item.start.millis,
+                            data-duration-millis=item.duration.millis,
                             data-duration-humanized=item.duration.humanized,
-                            style=styleString) #{item.start.formatted}
+                            style=styleString)

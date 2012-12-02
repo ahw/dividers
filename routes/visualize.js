@@ -9,7 +9,7 @@ module.exports = function(app) {
 
     app.get('/visualize/dividers', function(req, res) {
         getHistoryByDay(function(historyByDay) {
-            var context = { historyByDay : historyByDay };
+            var context = { historyByDay : historyByDay.reverse() };
             res.render('dividers', context);
             // res.json(historyByDay);
         });
