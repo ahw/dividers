@@ -29,7 +29,7 @@ module.exports = function(app) {
             var info = req.body.quick_event.split(' ');
             name = info[0];
             offset = info[1] ? parseInt(info[1]) : 0;
-            offsetunits = info[2] ? info[2] : 'seconds';
+            offsetunits = info[2] ? info[2] : 'minutes';
         } else {
             name = req.body.name;
             offset = req.body.offset ? parseInt(req.body.offset) : 0; // Offset defaults to 0.
