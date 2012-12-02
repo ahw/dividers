@@ -80,6 +80,7 @@ select {
 }
 
 .day-block-empty {
+    background-color:white;
     background-image:url('/images/1-9-c3-pixel.png');
 }
 
