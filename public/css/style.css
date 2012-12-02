@@ -1,6 +1,7 @@
 body {
     padding:50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    /* background-image: url('/images/white-weave.png'); */
 }
 
 tr.newDay td {
@@ -51,6 +52,7 @@ select {
     margin-bottom:5px;
     display:block;
     float:left;
+    overflow:hidden;
 }
 
 .center-text {

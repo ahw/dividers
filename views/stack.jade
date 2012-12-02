@@ -32,8 +32,7 @@ block content
                 - }
                 - var scaledHeight = scale * 1000;
                 - var isEmpty = item.name == 'stop' || item.name == 'not:previous'? true : false;
-                - var scaledFontSize = scale * 720;
-                //- var fontSize = Math.max(scaledFontSize, 14); // Use at least 14px font size.
+                - var scaledFontSize = Math.min(scale * 720, 300); // Use at most 300px font size.
                 if isEmpty
                     div.stack-text(data-name=item.name, style='height:' + scaledHeight + 'px')
                 else
