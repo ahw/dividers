@@ -6,12 +6,13 @@ module.exports = function(app) {
 
         getHistory(function(history) {
             var context = { history : history.reverse() };
-            if (req.accepts('html')) {
-                console.log('Client accepts html');
-                res.render('history', context);
-            } else if (req.accepts('json')) {
+            // Should be using req.accepts('json'), I know.
+            if (req.query.format == 'json') {
                 console.log('Client accepts json');
                 res.json(history);
+            } else if (req.accepts('html')) {
+                console.log('Client accepts html');
+                res.render('history', context);
             } else {
                 console.log('Client does not accept html, does not accept json');
                 res.render('history', context);
