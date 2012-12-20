@@ -1,0 +1,49 @@
+extends layout
+block content
+
+    h1(style='color:#aaa') events
+
+    div#event-list
+
+        form#quick-event-form(method='post', action='/history')
+            fieldset
+                input.input(name='quick_event', type='text', placeholder='Name Offset Units')
+                button.btn.btn-primary(type='submit') Post Event
+
+        form#new-event-form(method='post', action='/events')
+            fieldset
+                input.input(name='name', type='text', placeholder='Name')
+                button.btn.btn-primary(type='submit') Create
+
+        each item in events
+            div.eventLinkContainer
+                a.pseudo-form.pseudo-submit.event-link(
+                    href='#',
+                    data-formid=item.name,
+                    data-action='/history',
+                    data-method='post') #{item.name}
+
+                input.pseudo-form(
+                    data-formid=item.name,
+                    type='hidden',
+                    name='name',
+                    value=item.name)
+
+                br
+                - var lo = -300;
+                - var hi = 300;
+                select.pseudo-form(name='offset', data-formid=item.name)
+                    - for (var i = lo; i <= hi; i++) {
+                        - if (i == 0) {
+                            option(value=i, selected='selected') #{i}
+                        - } else {
+                            option(value=i) #{i}
+                        - }
+                    - }
+
+                select.pseudo-form(name='offsetunits', data-formid=item.name)
+                    option(value='seconds') seconds
+                    option(value='minutes') minutes
+                    option(value='hours') hours
+                    option(value='days') days
+                hr(style='clear:both')

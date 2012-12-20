@@ -5,13 +5,14 @@ module.exports = function(app) {
         var startTime = req.params.timestamp ? req.params.timestamp : null;
 
         getHistory(function(history) {
-            var context = { history : history };
-            if (req.accepts('html')) {
-                console.log('Client accepts html');
-                res.render('history', context);
-            } else if (req.accepts('json')) {
+            var context = { history : history.reverse() };
+            // Should be using req.accepts('json'), I know.
+            if (req.query.format == 'json') {
                 console.log('Client accepts json');
                 res.json(history);
+            } else if (req.accepts('html')) {
+                console.log('Client accepts html');
+                res.render('history', context);
             } else {
                 console.log('Client does not accept html, does not accept json');
                 res.render('history', context);
@@ -22,10 +23,19 @@ module.exports = function(app) {
 
 
     app.post('/history', checkAuth, function(req, res) {
-        var name = req.body.name;
-        var offset = req.body.offset;
-        offset = offset ? parseInt(offset) : 0; // Offset defaults to 0.
-        var offsetunits = req.body.offsetunits;
+
+        var name, offset, offsetunits;
+
+        if (req.body.quick_event) {
+            var info = req.body.quick_event.split(' ');
+            name = info[0];
+            offset = info[1] ? parseInt(info[1]) : 0;
+            offsetunits = info[2] ? info[2] : 'minutes';
+        } else {
+            name = req.body.name;
+            offset = req.body.offset ? parseInt(req.body.offset) : 0; // Offset defaults to 0.
+            offsetunits = req.body.offsetunits;
+        }
 
         switch(offsetunits) {
             case 'days':

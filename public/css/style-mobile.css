@@ -1,11 +1,33 @@
 body {
-    padding:50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     /* background-image: url('/images/white-weave.png'); */
+    margin:0;
+    padding:3px;
 }
 
 tr.newDay td {
     border-top:1px solid black;
+}
+
+#quick-event-form input {
+    width:80%;
+    display:block;
+}
+
+#new-event-form input {
+    width:80%;
+    display:block;
+}
+
+a.event-link {
+    font-size:400%;
+    width:100%;
+    overflow:hidden;
+    display:block;
+}
+
+.btn, .btn-primary {
+    width:100%;
 }
 
 input {
@@ -14,11 +36,18 @@ input {
 
 input[name="offset"] {
     margin:0 2px;
-    width:2em;
 }
 
-select {
-    margin:0 2px; !important
+select[name="offsetunits"] {
+    width:50%;
+    float:left;
+    margin:0 2px 8px; !important
+}
+
+select[name="offset"] {
+    width:25%;
+    float:left;
+    margin:0 2px 8px; !important
 }
 
 .text-light {
@@ -59,10 +88,8 @@ select {
     text-align:center;
 }
 
-#visualize-dividers {
-}
-
 .day-row {
+    width:80%;
     height:40px;
     display:block;
     margin:0;
@@ -72,16 +99,16 @@ select {
 
 .day-block {
     background-color:#333;
+    float:left;
     height:40px;
     display:block;
+    margin-top:1px;
+    margin-right:1px;
     color:white;
-    float:left;
-    margin-bottom:6px;
 }
 
 .day-block-empty {
     background-color:white;
-    background-image:url('/images/1-9-c3-pixel.png');
 }
 
 .day-block[data-name=sleep] {
@@ -108,7 +135,7 @@ select {
     text-align: center;
     position:relative;
     z-index:100;
-    width:100px;
+    width:50%;
     margin:auto;
     margin-top:9px;
 }
@@ -122,9 +149,9 @@ select {
 }
 
 #new-event-form {
-    float:right;
+    float:none;
 }
 
 #quick-event-form {
-    float:left;
+    float:none;
 }

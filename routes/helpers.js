@@ -1,10 +1,10 @@
 module.exports = function(app) {
 
     getHistoryByDay = function(callback) {
-        getHistory(callback, 0, 0, 'day');
+        getHistory(callback, 0, 0, 'day', true);
     };
 
-    getHistory = function(callback, startTime, endTime, grouping) {
+    getHistory = function(callback, startTime, endTime, grouping, splitAcrossDays) {
 
         var startTime = startTime ? startTime : 0;
         var endTime = endTime ? endTime : 0;
@@ -24,7 +24,6 @@ module.exports = function(app) {
             var history = [];
             db.sort(TIMESTAMPS,
                 'LIMIT', startIndex, limit,
-                'DESC',
                 'GET', '#',
                 'GET', 'event:*->name',
                 'GET', 'event:*->start',
@@ -33,7 +32,6 @@ module.exports = function(app) {
 
                 var firstEntryStart = parseInt(reply[2]);
                 var previousDayString = moment(firstEntryStart).format('YYYY-MM-DD');
-                console.log('[HELPER] getHistory() previousDayString initially = ' + previousDayString);
                 var day = [];
 
                 for (var i = 0; i < (reply.length / 4); i++) {
@@ -43,7 +41,12 @@ module.exports = function(app) {
                     // Use MomentJS to format the start time to human-friendly.
                     var m = moment(start);
                     var startOfDay = m.sod();
+                    var endOfDay = m.eod();
                     var offsetFromSod = m.diff(startOfDay);
+                    // console.log('[HELPER] getHistory() offsetFromSod = ' + offsetFromSod);
+                    var offsetFromEod = m.diff(endOfDay);
+                    // console.log('[HELPER] getHistory() negative offsetFromEod = ' + (-1 * offsetFromEod));
+                    // console.log('[HELPER] getHistory()               duration = ' + durationMillis);
                     var startFormatted = m.format('ddd MMM Do, h:mm:ss a');
                     var durationHumanized;
                     var dayString = m.format('YYYY-MM-DD');
@@ -62,6 +65,7 @@ module.exports = function(app) {
                             millis : durationMillis
                         },
                         offsetFromSod : offsetFromSod,
+                        offsetFromEod : offsetFromEod,
                         start : {
                             millis : start,
                             formatted : startFormatted,
@@ -80,20 +84,53 @@ module.exports = function(app) {
                         // of lists; one list for each day of history,
                         // containing all the events which started on that
                         // particular day.
+                        if (splitAcrossDays && durationMillis + offsetFromEod > 0) {
+                            item.duration.millis = -1 * item.offsetFromEod;
+                            var newItem = {
+                                start : endOfDay + 1,
+                                name : name,
+                                durationMillis : durationMillis + offsetFromEod
+                            };
+
+                            console.log('[HELPER] Item duration truncated from '
+                                + moment.duration(durationMillis, 'milliseconds').humanize()
+                                + ' to '
+                                + moment.duration(newItem.durationMillis, 'milliseconds').humanize());
+                            console.log('[HELPER] New item inserted with start time '
+                                + moment(newItem.start).format('ddd MMM Do, h:mm:ss a'));
+                            reply.splice(4 * (i+1), 0, newItem.start, newItem.name, newItem.start, newItem.durationMillis);
+                        }
 
                         if (dayString != previousDayString) {
                             // Reset the day string.
                             previousDayString = dayString;
-                            // Push the "day" struct.
+                            // Append the "day" struct.
                             history.push(day);
+
+                            var totalMillis = 0;
+                            var date = day[0].start.formatted;
+                            day.forEach(function(item) {
+                                totalMillis += item.duration.millis;
+                            });
+                            if (totalMillis == 24 * 60 * 60 * 1000) {
+                                console.log('[HELPER] Total duration is a full 24 hours!');
+                            } else {
+                                console.warn('[HELPER] Total duration for ' + date + ' is not 24 hours : ' + totalMillis);
+                            }
                             // Start with a blank day again.
                             day = [];
                             // Push this item onto the new day.
-                            day.unshift(item);
+                            day.push(item);
+
+                        } else if (i == (reply.length / 4 - 1)) {
+                            // Assert: we're on the last day. Push this day
+                            // strut to history even though its not fully
+                            // complete.
+                            history.push(day);
                         } else {
                             // Assert: this item was started on the same day as the
                             // previous; just push it to the same day struct.
-                            day.unshift(item);
+                            day.push(item);
                         }
 
                     } else {

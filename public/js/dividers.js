@@ -25,7 +25,7 @@ $(document).ready(function() {
             var key = method + " " + url;
 
             if (/POST \/history/.test(key)) {
-                var row = target.closest('tr');
+                var row = target.closest('.eventLinkContainer');
                 var originalColor = row.css('background-color');
                 row.css('background-color', 'yellow');
                 row.animate({backgroundColor: originalColor}, 1000);
@@ -154,6 +154,28 @@ $(document).ready(function() {
             success : function(response) {
                 deleteLink.prev().remove();
                 deleteLink.remove();
+            }
+        });
+        return false;
+    });
+
+    $('#quick-event-form').submit(function() {
+
+        var form = $(this);
+        $.ajax({
+            url : '/history',
+            type : 'POST',
+            data : {
+                quick_event : $(this).find('input[name="quick_event"]').val()
+            },
+            success : function(response) {
+                input = form.find('input[name="quick_event"]');
+                input.val('');
+                var originalColor = input.css('background-color');
+                input.css('background-color', 'yellow');
+                setTimeout(function() {
+                    input.animate({backgroundColor: originalColor}, 1000);
+                }, 500);
             }
         });
         return false;

@@ -2,22 +2,26 @@ doctype 5
 html(lang="en")
     head
         meta(charset='UTF-8')
+        meta(name='viewport', content='width=device-width, minimumscale=1.0, maximum-scale=1.0')
 
         title dividers
         link(rel='stylesheet', href='/css/bootstrap.min.css')
         link(rel='stylesheet', href='/css/style.css')
+        link(rel='stylesheet', href='/css/style-mobile.css')
         link(rel='shortcut icon', href='/images/dividers-favicon-57x57.png')
 
         script(type='text/javascript', src='/js/lib/jquery.js')
         script(type='text/javascript', src='/js/lib/jquery-ui.js')
-        script(type='text/javascript', src='/js/lib/underscore.js')
         script(type='text/javascript', src='/js/lib/sprintf.js')
-        script(type='text/javascript', src='/js/lib/bootstrap.min.js')
         script(type='text/javascript', src='/js/dividers.js')
     body
         h1.nav
             a(href='/events') events
+            br
             a(href='/history') history
+            br
             a(href='/visualize') visualize
+            br
             a(href='/tokens') tokens
+            br
         block content

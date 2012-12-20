@@ -70,6 +70,15 @@ checkAuth = function(req, res, next) {
     }
 };
 
+isMobile = function(req) {
+
+    var isMobile = /mobile/i.test(req.header('user-agent'));
+    if (isMobile) {
+        console.log('User agent is mobile');
+    }
+    return isMobile;
+};
+
 app.get('/login', function(req, res) {
     if (req.session.is_logged_in == true) {
         console.log('[AUTH] Already logged in, redirecting.');
