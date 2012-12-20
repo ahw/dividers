@@ -1,6 +1,6 @@
 module.exports = function(app) {
 
-    app.get('/events', checkAuth, function(req, res) {
+    app.get('/events', function(req, res) {
 
         db.sort(EVENTS, 'ALPHA', function(error, reply) {
 

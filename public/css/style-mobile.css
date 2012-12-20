@@ -1,0 +1,157 @@
+body {
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    /* background-image: url('/images/white-weave.png'); */
+    margin:0;
+    padding:3px;
+}
+
+tr.newDay td {
+    border-top:1px solid black;
+}
+
+#quick-event-form input {
+    width:80%;
+    display:block;
+}
+
+#new-event-form input {
+    width:80%;
+    display:block;
+}
+
+a.event-link {
+    font-size:400%;
+    width:100%;
+    overflow:hidden;
+    display:block;
+}
+
+.btn, .btn-primary {
+    width:100%;
+}
+
+input {
+    margin-right:4px;
+}
+
+input[name="offset"] {
+    margin:0 2px;
+}
+
+select[name="offsetunits"] {
+    width:50%;
+    float:left;
+    margin:0 2px 8px; !important
+}
+
+select[name="offset"] {
+    width:25%;
+    float:left;
+    margin:0 2px 8px; !important
+}
+
+.text-light {
+    color: #ccc;
+}
+
+.nav {
+    color: #ddd;
+}
+
+.stack-block {
+    width:100%;
+    margin:0;
+    margin-bottom:5px;
+    background-color:#333;
+    display:block;
+    float:left;
+    /* box-shadow: 2px 2px 50px 3px #555; */
+}
+
+.empty {
+    margin:0;
+    margin-bottom:5px;
+    float:left;
+    width:100%;
+}
+
+.stack-text {
+    width:100%;
+    margin:0;
+    margin-bottom:5px;
+    display:block;
+    float:left;
+    overflow:hidden;
+}
+
+.center-text {
+    text-align:center;
+}
+
+.day-row {
+    width:80%;
+    height:40px;
+    display:block;
+    margin:0;
+    margin:auto;
+    clear:both;
+}
+
+.day-block {
+    background-color:#333;
+    float:left;
+    height:40px;
+    display:block;
+    margin-top:1px;
+    margin-right:1px;
+    color:white;
+}
+
+.day-block-empty {
+    background-color:white;
+}
+
+.day-block[data-name=sleep] {
+    background-color:#ddd;
+}
+
+.day-block[data-name=work] {
+    background-color:gold;
+}
+
+.day-block[data-name^=commute] {
+    background-color:green;
+}
+
+.day-block[data-name^=eat] {
+    background-color:orange;
+}
+
+.day-block label {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 4px 4px 4px 4px;
+    display: block;
+    font-size: 90%;
+    text-align: center;
+    position:relative;
+    z-index:100;
+    width:50%;
+    margin:auto;
+    margin-top:9px;
+}
+
+.day-block[data-name^=exercise] {
+    background-color:royalBlue;
+}
+
+.day-block[data-name^=dacx-hack] {
+    background-color:gold;
+}
+
+#new-event-form {
+    float:none;
+}
+
+#quick-event-form {
+    float:none;
+}
