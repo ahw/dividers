@@ -16,33 +16,34 @@ block content
                 button.btn.btn-primary(type='submit') Create
 
         each item in events
-            a.pseudo-form.pseudo-submit.event-link(
-                href='#',
-                data-formid=item.name,
-                data-action='/history',
-                data-method='post') #{item.name}
+            div.eventLinkContainer
+                a.pseudo-form.pseudo-submit.event-link(
+                    href='#',
+                    data-formid=item.name,
+                    data-action='/history',
+                    data-method='post') #{item.name}
 
-            input.pseudo-form(
-                data-formid=item.name,
-                type='hidden',
-                name='name',
-                value=item.name)
+                input.pseudo-form(
+                    data-formid=item.name,
+                    type='hidden',
+                    name='name',
+                    value=item.name)
 
-            br
-            - var lo = -300;
-            - var hi = 300;
-            select.pseudo-form(name='offset', data-formid=item.name)
-                - for (var i = lo; i <= hi; i++) {
-                    - if (i == 0) {
-                        option(value=i, selected='selected') #{i}
-                    - } else {
-                        option(value=i) #{i}
+                br
+                - var lo = -300;
+                - var hi = 300;
+                select.pseudo-form(name='offset', data-formid=item.name)
+                    - for (var i = lo; i <= hi; i++) {
+                        - if (i == 0) {
+                            option(value=i, selected='selected') #{i}
+                        - } else {
+                            option(value=i) #{i}
+                        - }
                     - }
-                - }
 
-            select.pseudo-form(name='offsetunits', data-formid=item.name)
-                option(value='seconds') seconds
-                option(value='minutes') minutes
-                option(value='hours') hours
-                option(value='days') days
-            hr(style='clear:both')
+                select.pseudo-form(name='offsetunits', data-formid=item.name)
+                    option(value='seconds') seconds
+                    option(value='minutes') minutes
+                    option(value='hours') hours
+                    option(value='days') days
+                hr(style='clear:both')

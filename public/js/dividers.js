@@ -25,7 +25,7 @@ $(document).ready(function() {
             var key = method + " " + url;
 
             if (/POST \/history/.test(key)) {
-                var row = target.closest('tr');
+                var row = target.closest('.eventLinkContainer');
                 var originalColor = row.css('background-color');
                 row.css('background-color', 'yellow');
                 row.animate({backgroundColor: originalColor}, 1000);
