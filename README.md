@@ -2,7 +2,7 @@ dividers
 ========
 
 This is a pretty basic Express app that I built in order to familiarize
-myself with the Express, Node.js, Redis, and a bit of Jade. Nothing
+myself with Express, Node.js, Redis, and a bit of Jade. Nothing
 ground-breaking here, but it's been fun to play around with.
 
 I use dividers to track how I divide up my time each day (or sometimes, how
@@ -11,11 +11,8 @@ since it contains basically all of the stuff that I do each day, when I do
 it, and for how long. I didn't think it particularly wise to advertise all
 this information to the world.
 
-Demo
-----
-But hell, words without examples are no fun. So here you go, this link
-should be viewable from anywhere: TODO:link.
-
-Highlights
-----------
-Here are some highlights.
+Maybe someday I'll write a phone app that uses GPS coordinates and
+acceleromter information to automatically track how long my commute is, how
+long I spend sleeping, etc. For now I have to manually fire off each of
+these events from my computer or phone in order to track them, and it's easy
+to forget.
