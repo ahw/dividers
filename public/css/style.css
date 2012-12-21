@@ -88,7 +88,15 @@ select {
     background-color:#ddd;
 }
 
-.day-block[data-name=work] {
+.day-block[data-name^=work] {
+    background-color:gold;
+}
+
+.day-block[data-name="work:standing"] {
+    background-color:#FFFF00;
+}
+
+.day-block[data-name="work:sitting"] {
     background-color:gold;
 }
 

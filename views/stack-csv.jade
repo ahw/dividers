@@ -1,0 +1,9 @@
+extends layout
+block content
+
+    pre
+        | Name,Start Time,Start Time (millis),Duration,Duration (millis)
+        br
+        each item in history
+            | #{item.name},#{item.start.formatted},#{item.start.millis},#{item.duration.humanized},#{item.duration.millis}
+            br

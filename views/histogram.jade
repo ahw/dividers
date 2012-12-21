@@ -1,0 +1,8 @@
+extends layout
+block content
+
+    h1(style='color:#aaa')  histogram of #{name}
+
+    each frequency,bucket in histogramValues
+        - var width = 100 * parseInt(frequency) / parseInt(max)
+        pre(style='float:left; clear:both; width:' + width + '%')=bucket

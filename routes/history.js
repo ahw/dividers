@@ -8,7 +8,7 @@ module.exports = function(app) {
             var context = { history : history.reverse() };
             // Should be using req.accepts('json'), I know.
             if (req.query.format == 'json') {
-                console.log('Client accepts json');
+                console.log('Client requests JSON');
                 res.json(history);
             } else if (req.accepts('html')) {
                 console.log('Client accepts html');
