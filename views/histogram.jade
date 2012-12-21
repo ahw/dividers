@@ -5,4 +5,4 @@ block content
 
     each frequency,bucket in histogramValues
         - var width = 100 * parseInt(frequency) / parseInt(max)
-        pre(style='float:left; clear:both; width:' + width + '%')=bucket
+        pre(style='float:left; clear:both; width:' + width + '%') #{bucket} (#{frequency})
