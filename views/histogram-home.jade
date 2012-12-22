@@ -1,0 +1,14 @@
+extends layout
+block content
+
+    h1(style='color:#aaa')  histograms
+
+    p Create histograms of the form 
+        span(style='font-weight:bold; font-family:monospace') /eventname/bucketsize
+        , where 
+        span(style='font-weight:bold; font-family:monospace') bucketsize 
+        is a value in minutes.
+
+    h2 Examples
+    h2: a(href='/visualize/histogram/sleep/15') sleep/15
+    h2: a(href='/visualize/histogram/commute/5') commute/5

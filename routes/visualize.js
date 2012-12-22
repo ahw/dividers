@@ -26,6 +26,10 @@ module.exports = function(app) {
         res.render('visualize');
     });
 
+    app.get('/visualize/histogram', function(req, res) {
+        res.render('histogram-home');
+    });
+
     app.get('/visualize/histogram/:name/:bucketSizeMinutes', checkAuth, function(req, res) {
         var bucketSizeMinutes = parseInt(req.params.bucketSizeMinutes);
         console.log('bucketSizeMinutes = ' + bucketSizeMinutes);
